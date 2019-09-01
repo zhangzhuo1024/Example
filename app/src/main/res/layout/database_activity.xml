@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/createdatabase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="创建数据库" />
+
+    <Button
+        android:id="@+id/updatedatabase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="更新数据库"
+        app:layout_constraintLeft_toRightOf="@+id/createdatabase"
+        app:layout_constraintTop_toBottomOf="@+id/createdatabase" />
+
+    <Button
+        android:id="@+id/insert_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="插入表"
+        app:layout_constraintTop_toBottomOf="@+id/updatedatabase" />
+
+    <Button
+        android:id="@+id/update_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="更新表"
+        app:layout_constraintTop_toBottomOf="@+id/insert_table" />
+
+    <Button
+        android:id="@+id/select_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查询表"
+        app:layout_constraintTop_toBottomOf="@+id/update_table" />
+
+    <Button
+        android:id="@+id/delete_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="删除表"
+        app:layout_constraintTop_toBottomOf="@+id/select_table" />
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textAppearance="@color/colorAccent"
+        app:layout_constraintTop_toBottomOf="@+id/delete_table" />
+
+</android.support.constraint.ConstraintLayout>
