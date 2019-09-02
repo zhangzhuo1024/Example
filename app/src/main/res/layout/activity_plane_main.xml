@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".game.PlaneMainActivity">
 
+    <Button
+        android:id="@+id/start_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开始打飞机游戏"
+        android:textSize="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
