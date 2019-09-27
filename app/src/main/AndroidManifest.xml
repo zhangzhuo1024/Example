@@ -27,7 +27,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".game.PlaneGameActivity" />
-        <activity android:name=".clickevent.ClickEventActivity"></activity>
+        <activity android:name=".clickevent.ClickEventActivity" />
+        <activity android:name=".mediaplayer.ServiceActivity" />
+
+        <service
+            android:name=".mediaplayer.AudioPlayerService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

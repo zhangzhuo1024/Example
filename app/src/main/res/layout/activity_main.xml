@@ -38,6 +38,11 @@
         android:layout_height="wrap_content"
         android:text="ClickEvent"
         app:layout_constraintTop_toBottomOf="@id/game" />
-
+    <Button
+        android:id="@+id/click_media_play"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="go to mediaplayer activity"
+        app:layout_constraintTop_toBottomOf="@id/click_event" />
 
 </android.support.constraint.ConstraintLayout>
