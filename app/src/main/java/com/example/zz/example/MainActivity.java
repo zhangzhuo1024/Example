@@ -38,13 +38,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-
-        private void changeToActivity(String activityName) {
-            Intent intent = new Intent();
-            intent.setClassName(MainActivity.this, activityName);
-            startActivity(intent);
-        }
-
     };
     private View mGame;
     private View mClickEvent;
