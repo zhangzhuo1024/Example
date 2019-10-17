@@ -1,3 +1,5 @@
+import java.util.*
+
 fun main(args: Array<String>) {
 
     var addResult = addCalculator(2, 3)
@@ -10,6 +12,98 @@ fun main(args: Array<String>) {
 
     NullCheck()
 
+    diaryGenerator("颐和园");
+
+    calculatorGaoSi()
+
+    listAndMap()
+
+    函数和函数表达式()
+
+    tailrecTest()
+}
+
+fun tailrecTest() {
+
+    var result = 0
+    println(olladd(100, result))
+}
+
+fun olladd(i: Int, result: Int): Int {
+
+    println("进行第${i}次尾递归优化计算，累加结果是 ${result}")
+    if (i == 0) {
+        return i
+    } else {
+        return olladd(i - 1, result + i)
+    }
+}
+
+fun 函数和函数表达式() {
+
+    var a = calculatorNum(1, 2)
+
+    var calculatorNum2 = {x:Int,y:Int -> x+y}
+    val result = calculatorNum2(1, 2)
+
+    var calculatorNum3:(Int, Int)->Int = {x,y -> x+y}
+    println(calculatorNum3(2, 4))
+}
+
+fun calculatorNum(i: Int, i1: Int): Int {
+    return i + i1
+}
+
+fun listAndMap() {
+    var lists = listOf("卖鸡蛋","卖鸡蛋","煎鸡蛋")
+    for (list in lists) {
+
+    }
+    for ((i, e) in lists.withIndex()) {
+        var result = "${i}和${e}"
+        println(result)
+    }
+
+    var treemaps = TreeMap<String, String>()
+    treemaps["大哥"] = "大哥大"
+    treemaps["er哥"] = "er哥er"
+
+    for (treemap in treemaps) {
+
+    }
+    println(treemaps["大哥"])
+
+}
+
+fun calculatorGaoSi() {
+    var nums = 1..100
+    var nums2 = 1 until 100 //前闭后开
+    var result = 0
+    for (num in nums) {
+        result += num
+    }
+    for (num in nums step 2){  //1 3 5  7   步长为2
+//        println()
+    }
+    for (num in nums.reversed())  // 循环
+
+    println(result)
+}
+
+fun diaryGenerator(string: String) {
+    var diary = "今天天气晴朗，我们去${string}游玩，门口写着${string}${numToString(string.length)}个大字"
+    println(diary)
+}
+
+fun numToString(length: Int): String {
+    var string = when (length) {
+        1 -> "一"
+        2 -> "二"
+        3 -> "三"
+        4 -> "四"
+        else -> "我也不知道几"
+    }
+    return string
 }
 
 fun NullCheck() {
