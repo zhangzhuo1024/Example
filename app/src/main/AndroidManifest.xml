@@ -29,6 +29,7 @@
         <activity android:name=".game.PlaneGameActivity" />
         <activity android:name=".clickevent.ClickEventActivity" />
         <activity android:name=".mediaplayer.ServiceActivity" />
+        <activity android:name=".memorylink.MemoryLinkActivity" />
 
         <service
             android:name=".mediaplayer.AudioPlayerService"
