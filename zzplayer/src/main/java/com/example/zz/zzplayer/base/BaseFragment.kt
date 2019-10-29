@@ -16,7 +16,8 @@ abstract class BaseFragment : Fragment(),AnkoLogger{
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return initView()
+        val initView = initView()
+        return initView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -33,9 +34,7 @@ abstract class BaseFragment : Fragment(),AnkoLogger{
 
     }
 
-    protected fun initListener() {
-
-    }
+    abstract fun initListener()
 
     abstract fun initView(): View?
 

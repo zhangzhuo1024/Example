@@ -12,19 +12,20 @@ public class MemoryLinkActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory_link);
-        //内部类
-        LocalMethod localMethod = new LocalMethod();
-
-        if (linkInstance == null) {
-            linkInstance = new Link();
-        }
 
         //懒汉式单例
-        TestUtil instance = TestUtil.getInstance(this);
+//        TestUtil instance = TestUtil.getInstance(this);
+
+        //内部类
+//        LocalMethod localMethod = new LocalMethod();
+
+//        if (linkInstance == null) {
+//            linkInstance = new Link();
+//        }
 
         //子线程
-        MyThread myThread = new MyThread();
-        myThread.start();
+//        MyThread myThread = new MyThread();
+//        myThread.start();
     }
     class Link {
         public void dosomething() {

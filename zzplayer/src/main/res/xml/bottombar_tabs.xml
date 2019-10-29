@@ -2,20 +2,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <tabs>
         <tab
-            id="@+id/tab_home"
-            icon="@mipmap/ic_home"
-            title="首页" />
+            icon="@mipmap/ic_bottom_home_icon"
+            id="@+id/tab_home"/>
         <tab
             id="@+id/tab_mv"
-            icon="@mipmap/ic_mv"
-            title="MV" />
+            icon="@mipmap/ic_bottom_mv_unselect"/>
         <tab
             id="@+id/tab_vbang"
-            icon="@mipmap/ic_home"
-            title="乐单" />
+            icon="@mipmap/ic_bottom_vlist_unselect"/>
         <tab
             id="@+id/tab_yuedan"
-            icon="@mipmap/ic_home"
-            title="V榜" />
+            icon="@mipmap/ic_bottom_mvlist_unselect"/>
     </tabs>
 </PreferenceScreen>

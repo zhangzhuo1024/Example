@@ -7,6 +7,10 @@ import android.widget.TextView
 import com.example.zz.zzplayer.base.BaseFragment
 
 class VbangFragment: BaseFragment() {
+    override fun initListener() {
+
+    }
+
     override fun initView(): View? {
         val tv = TextView(context)
         tv.text = javaClass.simpleName
