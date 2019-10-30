@@ -30,7 +30,7 @@ abstract class BaseFragment : Fragment(),AnkoLogger{
         context?.runOnUiThread { toast(msg) }
     }
 
-    protected fun initData() {
+    protected open fun initData() {
 
     }
 
