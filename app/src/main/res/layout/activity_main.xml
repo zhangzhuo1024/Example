@@ -50,4 +50,10 @@
         android:layout_height="wrap_content"
         android:text="内存泄漏"
         app:layout_constraintTop_toBottomOf="@id/click_event" />
+    <Button
+        android:id="@+id/click_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RecyclerView测试"
+        app:layout_constraintTop_toBottomOf="@id/click_event" />
 </android.support.constraint.ConstraintLayout>

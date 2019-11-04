@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private View mGame;
     private View mClickEvent;
     private View mMemoryLink;
+    private View mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +34,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mGame = findViewById(R.id.game);
         mClickEvent = findViewById(R.id.click_event);
         mMemoryLink = findViewById(R.id.click_memory_link);
+        mRecyclerView = findViewById(R.id.click_recycler_view);
 
         mDatabase.setOnClickListener(this);
         mGame.setOnClickListener(this);
         mClickEvent.setOnClickListener(this);
         mMemoryLink.setOnClickListener(this);
+        mRecyclerView.setOnClickListener(this);
     }
 
     @OnClick(R.id.click_media_play)
@@ -63,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.click_memory_link:
                 Intent intent4 = new Intent(MainActivity.this, MemoryLinkActivity.class);
                 startActivity(intent4);
+            case R.id.click_recycler_view:
+                Intent intent5 = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(intent5);
             default:
                 return;
         }
