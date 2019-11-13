@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.zz.example.clickevent.ClickEventActivity;
+import com.example.zz.example.extractorvideo.MediaExtractorActivity;
 import com.example.zz.example.game.PlaneMainActivity;
 import com.example.zz.example.mediaplayer.ServiceActivity;
 import com.example.zz.example.memorylink.MemoryLinkActivity;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private View mClickEvent;
     private View mMemoryLink;
     private View mRecyclerView;
+    private View mExtractorVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +37,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mClickEvent = findViewById(R.id.click_event);
         mMemoryLink = findViewById(R.id.click_memory_link);
         mRecyclerView = findViewById(R.id.click_recycler_view);
+        mExtractorVideo = findViewById(R.id.click_extractor_video);
 
         mDatabase.setOnClickListener(this);
         mGame.setOnClickListener(this);
         mClickEvent.setOnClickListener(this);
         mMemoryLink.setOnClickListener(this);
         mRecyclerView.setOnClickListener(this);
+        mExtractorVideo.setOnClickListener(this);
     }
 
     @OnClick(R.id.click_media_play)
@@ -69,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.click_recycler_view:
                 Intent intent5 = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent5);
+            case R.id.click_extractor_video:
+                Intent intent6 = new Intent(MainActivity.this, MediaExtractorActivity.class);
+                startActivity(intent6);
             default:
                 return;
         }
