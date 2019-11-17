@@ -30,6 +30,9 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 存储根目录放置input.mp4的视频，执行分离，就可以分离出，纯音频和纯视频文件
+ */
 public class MediaExtractorActivity extends AppCompatActivity {
     private static final String TAG = "MediaExtractorActivity";
     private final String mSdCard = Environment.getExternalStorageDirectory().getPath();
@@ -50,9 +53,54 @@ public class MediaExtractorActivity extends AppCompatActivity {
         mExtractorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                extractorVideo();
+                extractorVideoAndAudio();
             }
         });
+    }
+
+    private void extractorAudio() {
+        MediaExtractor mediaExtractor = new MediaExtractor();
+        Log.i(TAG, "mSdCard " + mSdCard);
+        MediaFormat trackFormat = null;
+        int videoTtack = -1;
+        try {
+            mediaExtractor.setDataSource(mSdCard + "/input.mp4");
+            int trackCount = mediaExtractor.getTrackCount();
+            for (int i = 0; i < trackCount; i++) {
+                trackFormat = mediaExtractor.getTrackFormat(i);
+                String keyMime = trackFormat.getString(MediaFormat.KEY_MIME);
+                if (keyMime.startsWith("audio")) {
+                    videoTtack = i;
+                    break;
+                }
+            }
+            mediaExtractor.selectTrack(videoTtack);
+
+            MediaMuxer mediaMuxer = new MediaMuxer(mSdCard + "/outputaudio.m4a", MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+            int trackIndex = mediaMuxer.addTrack(trackFormat);
+
+            MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();
+            int maxInputSize = trackFormat.getInteger(MediaFormat.KEY_MAX_INPUT_SIZE);
+            ByteBuffer buffer  = ByteBuffer.allocate(maxInputSize);
+            mediaMuxer.start();
+            while (true) {
+                int sampleSize = mediaExtractor.readSampleData(buffer, 0);
+                if (sampleSize < 0) {
+                    break;
+                }
+                bufferInfo.flags = mediaExtractor.getSampleFlags();
+                bufferInfo.presentationTimeUs = mediaExtractor.getSampleTime();
+                bufferInfo.size = sampleSize;
+                bufferInfo.offset = 0;
+                mediaMuxer.writeSampleData(trackIndex, buffer, bufferInfo);
+                mediaExtractor.advance();
+            }
+            mediaMuxer.stop();
+            mediaMuxer.release();
+            mediaExtractor.release();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initPermission() {
@@ -133,30 +181,37 @@ public class MediaExtractorActivity extends AppCompatActivity {
 
 
 
-    private void extractorVideo() {
-        Log.i(TAG, "extractorVideo");
+    private void extractorVideoAndAudio() {
+        Log.i(TAG, "extractorVideoAndAudio");
         MediaExtractor mediaExtractor = new MediaExtractor();
         Log.i(TAG, "mSdCard " + mSdCard);
-        MediaFormat trackFormat = null;
-        int videoTtack = -1;
+        MediaFormat audioTrackFormat = null;
+        MediaFormat videoTrackFormat = null;
+        int audioExtractorTtack = -1;
+        int videoExtractorTtack = -1;
         try {
             mediaExtractor.setDataSource(mSdCard + "/input.mp4");
             int trackCount = mediaExtractor.getTrackCount();
             for (int i = 0; i < trackCount; i++) {
-                trackFormat = mediaExtractor.getTrackFormat(i);
+                MediaFormat trackFormat = mediaExtractor.getTrackFormat(i);
                 String keyMime = trackFormat.getString(MediaFormat.KEY_MIME);
                 if (keyMime.startsWith("video")) {
-                    videoTtack = i;
-                    break;
+                    videoTrackFormat = trackFormat;
+                    videoExtractorTtack = i;
+                }
+                if (keyMime.startsWith("audio")) {
+                    audioTrackFormat = trackFormat;
+                    audioExtractorTtack = i;
                 }
             }
-            mediaExtractor.selectTrack(videoTtack);
 
+
+            mediaExtractor.selectTrack(videoExtractorTtack);
             MediaMuxer mediaMuxer = new MediaMuxer(mSdCard + "/outputvideo.mp4", MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
-            int trackIndex = mediaMuxer.addTrack(trackFormat);
+            int videoTrackIndex = mediaMuxer.addTrack(videoTrackFormat);
 
             MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();
-            int maxInputSize = trackFormat.getInteger(MediaFormat.KEY_MAX_INPUT_SIZE);
+            int maxInputSize = videoTrackFormat.getInteger(MediaFormat.KEY_MAX_INPUT_SIZE);
             ByteBuffer buffer  = ByteBuffer.allocate(maxInputSize);
             mediaMuxer.start();
             while (true) {
@@ -168,13 +223,38 @@ public class MediaExtractorActivity extends AppCompatActivity {
                 bufferInfo.presentationTimeUs = mediaExtractor.getSampleTime();
                 bufferInfo.size = sampleSize;
                 bufferInfo.offset = 0;
-                mediaMuxer.writeSampleData(trackIndex, buffer, bufferInfo);
+                mediaMuxer.writeSampleData(videoTrackIndex, buffer, bufferInfo);
                 mediaExtractor.advance();
             }
+
+            mediaExtractor.selectTrack(audioExtractorTtack);
+            MediaMuxer audioMediaMuxer = new MediaMuxer(mSdCard + "/outputaudio.m4a", MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+            int audioTrackIndex = audioMediaMuxer.addTrack(audioTrackFormat);
+
+            MediaCodec.BufferInfo audioBufferInfo = new MediaCodec.BufferInfo();
+            int audioMaxInputSize = audioTrackFormat.getInteger(MediaFormat.KEY_MAX_INPUT_SIZE);
+            ByteBuffer audioBuffer  = ByteBuffer.allocate(audioMaxInputSize);
+            audioMediaMuxer.start();
+            while (true) {
+                int sampleSize = mediaExtractor.readSampleData(audioBuffer, 0);
+                if (sampleSize < 0) {
+                    break;
+                }
+                audioBufferInfo.flags = mediaExtractor.getSampleFlags();
+                audioBufferInfo.presentationTimeUs = mediaExtractor.getSampleTime();
+                audioBufferInfo.size = sampleSize;
+                audioBufferInfo.offset = 0;
+                audioMediaMuxer.writeSampleData(audioTrackIndex, audioBuffer, audioBufferInfo);
+                mediaExtractor.advance();
+            }
+
+
             mediaMuxer.stop();
             mediaMuxer.release();
+            audioMediaMuxer.stop();
+            audioMediaMuxer.release();
             mediaExtractor.release();
-            Toast.makeText(MediaExtractorActivity.this, "分离出视频 ， 成功！！！", Toast.LENGTH_LONG);
+            Toast.makeText(MediaExtractorActivity.this, "分离出视频和音频 ， 成功！！！", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         }
