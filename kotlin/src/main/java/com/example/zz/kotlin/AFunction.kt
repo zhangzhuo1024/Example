@@ -2,19 +2,9 @@ import java.util.*
 
 private val i3 = 3
 
-/**
- * java继承多态
- * 继承：单继承，多实现；子类继承父类的非私有变量和方法，在子类中可以使用
- * 多态：三要素，1、有继承关系，2、子类重写父类成员方法，3、父类数据类型引用至子类，
- * 重写不能重写成员变量及static修饰的成员变量或方法，只能重写方法。（多态是运行时动态绑定的，
- * static是在编译时随类一起被静态绑定的）。所以“成员变量、静态方法看左边；非静态方法，
- * 编译看左，运行看右”
- *
- */
-
-
 fun main(args: Array<String>) {
 
+    //主函数  java的主函数要放在单独的类，如果在类中，就放在类里面，kotlin的主函数要放在类外面
     二进制()
     类型声明与推断()
     函数编写规则()
@@ -32,6 +22,13 @@ fun main(args: Array<String>) {
     人机交互和问号感叹号()
     递归()
     封装继承和多态()
+    接口和抽象类()
+    委托和代理()
+    单例()
+    枚举和印章()
+
+    面向对象编程和函数式编程()
+    高阶函数()
 
     var addResult = addCalculator(2, 3)
     var sub = sub(3, 2)
@@ -45,11 +42,162 @@ fun main(args: Array<String>) {
 
 }
 
-fun 封装继承和多态() {
+fun 高阶函数() {
+    //将函数作为参数，或者返回一个函数，称为高阶函数
+    // 这样的函数有maxBy
 
-    //封装 private关键字
+    var a = Girl("达达", 18, 175)
+    var b = Girl("文文", 19, 173)
+    var c = Girl("西西", 22, 171)
+    var items = listOf<Girl>()
+    val maxBy = items.maxBy { it.age }
+    println(maxBy)
+}
+class Girl(var name: String, var age: Int, var height: Int){
+
+}
+
+fun 面向对象编程和函数式编程() {
+
+    var items = listOf<String>("a", "b", "c")
+
+    //函数式编程1
+    items.forEach() { a -> printItem(a) }
+    //函数式编程2
+    items.forEach() { printItem(it) }
+    //函数式编程3
+    items.forEach(printItem3)
+    //函数式编程4
+    var printItem4 = { s: String -> println(s) }
+    items.forEach(printItem4)
+    //函数式编程5
+    items.forEach({s:String -> println(s)})
+
+}
+
+var printItem3 = fun(s: String): Unit { println(s) }
+
+fun printItem(s: String) {
+    println(s+"111")
+}
+
+fun 枚举和印章() {
+    //枚举可以限定取值的范围，所有的内容只能从指定范围中取得.
+    Week.Mon
+
+    //Sealed calss 印章类，子类类型有限的class，就是限定子类的取值范围，所有的类只能从指定的类中选取
+    var minCat = Animal.Cat()         //Animal 是不可用的，后面必须带
+    var minDog = Animal.Dog()
+}
+
+enum class Week {
+    Mon, Tues, Wed, Thur, Fri, Sat, Sun
+}
+
+sealed class Animal {
+    class Cat {
+        fun eat() {}
+    }
+
+    class Dog {
+        fun play() {}
+    }
+}
+
+fun 单例() {
+    //一个类加了object关键字就是单例类，可以用类名直接调用，使用的是饿汉式单例
+    // Tools->Kotlin-> Show Kotlin ByteCode -> Decompile 可以反编译为java文件查看时饿汉式
+    BigHeadSon.eat()
+}
+
+object BigHeadSon {
+    fun eat() {
+
+    }
+}
+
+fun 委托和代理() {
+    //Kotlin 官方示例代码，还是一脸懵逼
+//    interface	Base	{
+//        fun	print()
+//    }
+//
+//    class	BaseImpl(val	x:	Int)	:	Base	{
+//        override	fun	print()	{
+//            print(x)
+//        }
+//    }
+//
+//    class	Derived(b:	Base)	:	Base	by	b
+//
+//    fun	main(args:	Array<String>)	{
+//        val	b	=	BaseImpl(10)
+//        Derived(b).print()	//	输出	10 }
+//    }
+
+}
+
+fun 接口和抽象类() {
+    /**
+     * 接口 体现的是事物的能力
+     * 抽象类 体现的是事物的本质
+     *
+     * 简单讲就是，所有对象都必须有的，就抽成抽象类；比如人吃饭时必须的，抽象类Human，eat方法
+     * 部分对象有，部分对象又没有的，就抽成接口；比如开车是种能力，不一定所有对象都会，抽成接口，ISkill，drive方法
+     *
+     *
+     */
+
+
+}
+
+fun 封装继承和多态() {
+    //kotlin构造函数
+    /**
+     * class Son(nameSon: String) : Father(nameSon)
+     * class Son(val nameSon: String) : Father(nameSon)
+     * 1.什么都没有,在该类中使不能使用的, 这个参数的作用就是,传递给父类的构造方法
+     * 2.使用var 可以在类中使用,相当于 我们声明了一个该类中定义了一个private 的成员变量
+     * 3.val表示不让修改该参数 加上了final 修饰符
+     */
+
+    //封装 private关键字，加了以后之内在本类中直接调用，与java一致，
+    // 无法在其他类中通过“对象.方法（）”的形式调用！！！
     getMoney()
 
+    /**
+     * java继承多态
+     * 继承：单继承，多实现；子类继承父类的非私有变量和方法，在子类中可以使用
+     * 多态：三要素，1、有继承关系，2、子类重写父类成员方法，3、父类数据类型引用至子类，
+     * 重写：不能重写成员变量及static修饰的成员变量或方法，只能重写方法。（多态是运行时动态绑定的，
+     * static是在编译时随类一起被静态绑定的）。所以“成员变量、静态方法看左边；非静态方法，
+     * 编译看左，运行看右”
+     * 案例：
+     * Son extends Father
+     * Son son = new Son（）；
+     * Father father = new Son（）；
+     * son可以使用 自己的所有方法变量 + 父类的非私有方法变量
+     * father可以使用 自己的所有方法变量，但是如果自己的方法被子类重写，
+     * 运行的时候就时运行子类重写的此方法。要想父类也运行，需要子类调用supper
+     * 重写只能重写方法，不能重写变量，子类父类成员变量可以有相同的变量名，通过son和father可以分别调用到！！！
+     *
+     * 子类继承父类，运行顺序为:
+     * 父类静态代码块>子类静态代码块>父类普通代码块>父类构造函数>子类普通代码块>
+     * 子类构造函数
+     * 子类构造函数第一行一定会调用super来初始化父类构造函数，构造函数没参数时，子类
+     * 构造函数第一行默认会加super，手动加上也可以；如果构造函数有参数时，子类必须在构造函数
+     * 第一行加上super调用，并把参数传入。原因很好理解，继承了父类肯定时想使用父类的变量方法
+     * 要使用父类特性，肯定要先将父类初始化 参见Human 和 Man
+     *
+     *
+     * Kotlin继承多态
+     * java的继承多态中，son不能调用父类的私有变量和方法，而father不能调用Son中自己没有的方法，
+     * Kotlin中呢，有自动推断功能，它使用的是什么来接收呢？
+     * 1、类和方法默认都是final的，父类只有加了open关键字打开了，才能被人继承，方法加了open才能被重写，
+     * 与java不同，变量加open也可以被重写！！！所以子类父类不能有相同变量名，相同变量名要重写
+     * 2、重写方法前面需要添加override
+     * 3、var s = Son("son")的写法相当于 Son s = new Son("son")的同时，s可以当作Father，见Son类的调用
+     */
 
 
 }
