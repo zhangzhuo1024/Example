@@ -29,6 +29,7 @@ fun main(args: Array<String>) {
 
     面向对象编程和函数式编程()
     高阶函数()
+    领域特定语言DSL()
 
     var addResult = addCalculator(2, 3)
     var sub = sub(3, 2)
@@ -42,19 +43,99 @@ fun main(args: Array<String>) {
 
 }
 
+fun 领域特定语言DSL() {
+    /**
+     * 扩展函数  扩展函数可以给现有的各种类添加各种新的方法
+     * 中缀表达式  方法前添加infix之后，对象.方法  调用可以把点替换成空格
+     *
+     * 综合上面两点就可以自由度很高的添加自己的框架，添加了infix关键字，
+     * 可以不用点就可以自然调用，更符合人类语言，是第五代语言。定义了自己的框架后
+     * 按照框架，电脑小白也可以实现编程，如下面的例子 items getGirlAgeAbove 18 就非常符合人类语言
+     */
+
+    var a = Girl("达达", 18, 173)
+    var b = Girl("文文", 19, 173)
+    var c = Girl("西西", 22, 171)
+    var items = listOf<Girl>(a, b, c)
+
+    //给List类新增（扩展）了一个方法，getAge18Girl
+    items.getGirlAgeAbove(18)
+
+    //添加中缀关键字infix之后，可以不用点来调用
+    items.getGirlAgeAbove2(19)
+    items getGirlAgeAbove2 18
+}
+//此处给List添加（扩展）一个新的函数
+fun List<Girl>.getGirlAgeAbove(age:Int){
+    filter {
+        it.age > 18
+    }.forEach(::println)
+}
+infix fun List<Girl>.getGirlAgeAbove2(age:Int){
+    filter {
+        it.age > 18
+    }.forEach(::println)
+}
+
 fun 高阶函数() {
     //将函数作为参数，或者返回一个函数，称为高阶函数
     // 这样的函数有maxBy
 
-    var a = Girl("达达", 18, 175)
+    var a = Girl("达达", 18, 173)
     var b = Girl("文文", 19, 173)
     var c = Girl("西西", 22, 171)
-    var items = listOf<Girl>()
+    var items = listOf<Girl>(a, b, c)
+    for (item in items) {
+        if (item.age > 20) {
+            println(item)
+        }
+    }
+    //找最大的高阶函数,返回age最大的对象集合
     val maxBy = items.maxBy { it.age }
-    println(maxBy)
-}
-class Girl(var name: String, var age: Int, var height: Int){
+    println(maxBy?.name + "maxBy")
+    //筛选高阶函数，返回满足条件的对象集合
+    val filter = items.filter { (it.age > 18) and (it.height > 170) }
+    println(filter)
+    //抽取高阶函数，返回只有mane 和height两个属性的集合
+    val map = items.map { it.name  ; it.height }
+    //判断高阶函数，返回值是Boolean, 是否满足条件
+    val any = items.any() { it.age > 18 }
+    //统计高阶函数，返回值是符合条件的有多少个
+    val count = items.count() { it.age > 18 }
+    //查询高阶函数，返回值是满足条件的集合
+    val find = items.find { it.age > 18 }
+    //分组高阶函数，返回值是按条件分组后的map集合key是分组标准，value是该标准下的对象集合
+    val groupBy = items.groupBy { it.height }
+    val get = groupBy.get(173)
 
+    /**
+     *     使用高阶函数(higher-order functions)会导致一些性能的损耗:
+    每个函数都是对象,且会捕获闭包closure(即变量会在函数体内被访问),
+    函数对象/类会增加内存分配,而且虚拟调用栈也会增加额外内存开销！
+
+    可用内联函数(inline function)消除这些额外内存开销,
+    说白了就是在调用处插入函数体代码,以此减少新建函数栈和对象的内存开销!
+    被inline修饰的函数或lambda表达式,在调用时都会被内联(在调用处插入函数体代码)
+     */
+
+}
+class Girl(var name: String, var age: Int, var height: Int) {
+
+}
+public inline fun <Girl, Int : Comparable<Int>> Iterable<Girl>.maxBy(selector: (Girl) -> Int): Girl? {
+    val iterator = iterator()
+    if (!iterator.hasNext()) return null
+    var maxElem = iterator.next()
+    var maxValue = selector(maxElem)
+    while (iterator.hasNext()) {
+        val e = iterator.next()
+        val v = selector(e)
+        if (maxValue < v) {
+            maxElem = e
+            maxValue = v
+        }
+    }
+    return maxElem
 }
 
 fun 面向对象编程和函数式编程() {
@@ -71,14 +152,14 @@ fun 面向对象编程和函数式编程() {
     var printItem4 = { s: String -> println(s) }
     items.forEach(printItem4)
     //函数式编程5
-    items.forEach({s:String -> println(s)})
+    items.forEach({ s: String -> println(s) })
 
 }
 
 var printItem3 = fun(s: String): Unit { println(s) }
 
 fun printItem(s: String) {
-    println(s+"111")
+    println(s + "111")
 }
 
 fun 枚举和印章() {
