@@ -31,6 +31,9 @@ fun main(args: Array<String>) {
     高阶函数()
     领域特定语言DSL()
 
+    定义常量和成员变量()
+    内部类()
+
     var addResult = addCalculator(2, 3)
     var sub = sub(3, 2)
     var boolean = checkAge(18)
@@ -41,6 +44,28 @@ fun main(args: Array<String>) {
 
     NullCheck()
 
+}
+
+fun 内部类() {
+
+    //内部类定义的时候需要在前面加 inner
+
+    class Adapter(){
+        inner class Date(){
+
+        }
+    }
+}
+
+fun 定义常量和成员变量() {
+
+    //成员变量如果定义的时候不初始化需要在前面加上lateinit, 如
+    lateinit var str:String
+
+//    companion object {
+//        val TYPE_TITLE = 0
+//        val TYPE_SELLER = 1
+//    }
 }
 
 fun 领域特定语言DSL() {
