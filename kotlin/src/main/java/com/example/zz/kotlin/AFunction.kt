@@ -1,4 +1,5 @@
 import java.util.*
+import java.io.Serializable
 
 private val i3 = 3
 
@@ -34,6 +35,9 @@ fun main(args: Array<String>) {
     定义常量和成员变量()
     内部类()
 
+    for循环点击事件()
+    数据类和序列化()
+
     var addResult = addCalculator(2, 3)
     var sub = sub(3, 2)
     var boolean = checkAge(18)
@@ -46,12 +50,69 @@ fun main(args: Array<String>) {
 
 }
 
+fun 数据类和序列化() {
+    //数据类 DATACLASS： 在Kotlin中，不用自己手动写javabean类，可以直接使用data calss实现，并且data class自动生成了很多函数
+    //使用方法就是在最前面加data 如Student类
+    Student("达达", 18, 188)
+    Student("文文", 4, 13)
+    val student = Student("西西", 34, 176)
+    println(student) // Student(name="西西", age=34, height=176) 自动有toString功能
+
+    //序列化 Serializable  https://baijiahao.baidu.com/s?id=1633305649182361563&wfr=spider&for=pc
+    /**
+     *      如何实现序列化 ，实现Serializable接口就行了 如Student类
+     *     把对象转换为字节序列的过程叫做序列化
+     *     把字节序列转换为对象的过程叫做反序列化
+     *
+     *     开发过程中，实体并没有实现序列化，但我同样可以将数据保存到mysql、Oracle数据库中，为什么非要序列化才能存储呢？
+     *     在Java中的这个Serializable接口其实是给jvm看的，通知jvm，我不对这个类做序列化了，你(jvm)帮我序列化就好了。就是用来标记通知一下，提高效率的
+     *      Serializable接口就是Java提供用来进行高效率的异地共享实例对象的机制，实现这个接口即可。
+     *
+     */
+
+}
+
+data class Student(val name: String, var age: Int, var height: Int):Serializable
+
+fun for循环点击事件() {
+
+    // for循环写法
+
+    var a = Girl("达达", 18, 173)
+    var b = Girl("文文", 19, 173)
+    var c = Girl("西西", 22, 171)
+    var items = listOf<Girl>(a, b, c)
+
+    //循环一
+    for (item in items) {
+        if (item.age > 20) {
+            println(item)
+        }
+    }
+
+    //循环二  点击事件一，点击事件后面加匿名内部类，用object修饰，后面是小括号里面在监听大括号
+//    for (i in 0 until main_bottom_bar.childCount) {
+//        main_bottom_bar.getChildAt(i).setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(view: View?) {
+//
+//            }
+//
+//        })
+//    }
+
+    //点击事件二，后面不加匿名内部类，加lambda表达式 lambda表达式后面是直接加大括号, 如果只用角标，v->  符号也可以省略
+//    main_bottom_bar.getChildAt(i).setOnClickListener { v ->
+//        changeIndex(i)
+//    }
+
+}
+
 fun 内部类() {
 
     //内部类定义的时候需要在前面加 inner
 
-    class Adapter(){
-        inner class Date(){
+    class Adapter() {
+        inner class Date() {
 
         }
     }
@@ -60,7 +121,7 @@ fun 内部类() {
 fun 定义常量和成员变量() {
 
     //成员变量如果定义的时候不初始化需要在前面加上lateinit, 如
-    lateinit var str:String
+    lateinit var str: String
 
 //    companion object {
 //        val TYPE_TITLE = 0
@@ -90,13 +151,15 @@ fun 领域特定语言DSL() {
     items.getGirlAgeAbove2(19)
     items getGirlAgeAbove2 18
 }
+
 //此处给List添加（扩展）一个新的函数
-fun List<Girl>.getGirlAgeAbove(age:Int){
+fun List<Girl>.getGirlAgeAbove(age: Int) {
     filter {
         it.age > 18
     }.forEach(::println)
 }
-infix fun List<Girl>.getGirlAgeAbove2(age:Int){
+
+infix fun List<Girl>.getGirlAgeAbove2(age: Int) {
     filter {
         it.age > 18
     }.forEach(::println)
@@ -122,7 +185,7 @@ fun 高阶函数() {
     val filter = items.filter { (it.age > 18) and (it.height > 170) }
     println(filter)
     //抽取高阶函数，返回只有mane 和height两个属性的集合
-    val map = items.map { it.name  ; it.height }
+    val map = items.map { it.name; it.height }
     //判断高阶函数，返回值是Boolean, 是否满足条件
     val any = items.any() { it.age > 18 }
     //统计高阶函数，返回值是符合条件的有多少个
@@ -144,9 +207,11 @@ fun 高阶函数() {
      */
 
 }
+
 class Girl(var name: String, var age: Int, var height: Int) {
 
 }
+
 public inline fun <Girl, Int : Comparable<Int>> Iterable<Girl>.maxBy(selector: (Girl) -> Int): Girl? {
     val iterator = iterator()
     if (!iterator.hasNext()) return null
