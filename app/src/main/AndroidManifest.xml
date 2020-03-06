@@ -35,6 +35,8 @@
         <activity android:name=".memorylink.MemoryLinkActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".extractorvideo.MediaExtractorActivity" />
+        <activity android:name=".clickspanner.WeiboContentTestActivity" />
+
 
 
         <service

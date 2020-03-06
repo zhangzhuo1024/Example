@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.zz.example.clickevent.ClickEventActivity;
+import com.example.zz.example.clickspanner.WeiboContentTestActivity;
 import com.example.zz.example.extractorvideo.MediaExtractorActivity;
 import com.example.zz.example.game.PlaneMainActivity;
 import com.example.zz.example.mediaplayer.ServiceActivity;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mMemoryLink = findViewById(R.id.click_memory_link);
         mRecyclerView = findViewById(R.id.click_recycler_view);
         mExtractorVideo = findViewById(R.id.click_extractor_video);
+        findViewById(R.id.click_url).setOnClickListener(this);
 
         mDatabase.setOnClickListener(this);
         mGame.setOnClickListener(this);
@@ -67,15 +69,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.click_event:
                 Intent intent3 = new Intent(MainActivity.this, ClickEventActivity.class);
                 startActivity(intent3);
+                break;
             case R.id.click_memory_link:
                 Intent intent4 = new Intent(MainActivity.this, MemoryLinkActivity.class);
                 startActivity(intent4);
+                break;
             case R.id.click_recycler_view:
                 Intent intent5 = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent5);
+                break;
             case R.id.click_extractor_video:
                 Intent intent6 = new Intent(MainActivity.this, MediaExtractorActivity.class);
                 startActivity(intent6);
+                break;
+            case R.id.click_url:
+                Intent intent7 = new Intent(MainActivity.this, WeiboContentTestActivity.class);
+                startActivity(intent7);
+                break;
             default:
                 return;
         }
