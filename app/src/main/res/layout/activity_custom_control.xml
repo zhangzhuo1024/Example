@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.zz.example.customcontrol.IconView
+        android:id="@+id/start_icon_view"
+        app:cycle_width="180dp"
+        app:cycle_troke="20dp"
+        app:cycle_color="@color/cycle_color"
+        app:red_point_width="86.7dp"
+        app:red_point_color="@color/red_point_color"
+        app:square_width="80dp"
+        app:square_radius="16.6dp"
+        app:move_distance="60dp"
+        android:background="@color/background_color"
+        android:layout_width="180dp"
+        android:layout_height="300dp" />
+
+
+</RelativeLayout>

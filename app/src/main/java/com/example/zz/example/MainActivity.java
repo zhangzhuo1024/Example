@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.example.zz.example.clickevent.ClickEventActivity;
 import com.example.zz.example.clickspanner.WeiboContentTestActivity;
+import com.example.zz.example.customcontrol.CustomControlActivity;
 import com.example.zz.example.extractorvideo.MediaExtractorActivity;
 import com.example.zz.example.game.PlaneMainActivity;
 import com.example.zz.example.mediaplayer.ServiceActivity;
@@ -33,20 +34,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mDatabase = findViewById(R.id.database);
-        mGame = findViewById(R.id.game);
-        mClickEvent = findViewById(R.id.click_event);
-        mMemoryLink = findViewById(R.id.click_memory_link);
-        mRecyclerView = findViewById(R.id.click_recycler_view);
-        mExtractorVideo = findViewById(R.id.click_extractor_video);
+        findViewById(R.id.database).setOnClickListener(this);
+        findViewById(R.id.game).setOnClickListener(this);
+        findViewById(R.id.click_event).setOnClickListener(this);
+        findViewById(R.id.click_memory_link).setOnClickListener(this);
+        findViewById(R.id.click_recycler_view).setOnClickListener(this);
+        findViewById(R.id.click_extractor_video).setOnClickListener(this);
         findViewById(R.id.click_url).setOnClickListener(this);
+        findViewById(R.id.click_customcontrol).setOnClickListener(this);
 
-        mDatabase.setOnClickListener(this);
-        mGame.setOnClickListener(this);
-        mClickEvent.setOnClickListener(this);
-        mMemoryLink.setOnClickListener(this);
-        mRecyclerView.setOnClickListener(this);
-        mExtractorVideo.setOnClickListener(this);
+
     }
 
     @OnClick(R.id.click_media_play)
@@ -85,6 +82,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.click_url:
                 Intent intent7 = new Intent(MainActivity.this, WeiboContentTestActivity.class);
                 startActivity(intent7);
+                break;
+            case R.id.click_customcontrol:
+                Intent intent8 = new Intent(MainActivity.this, CustomControlActivity.class);
+                startActivity(intent8);
                 break;
             default:
                 return;

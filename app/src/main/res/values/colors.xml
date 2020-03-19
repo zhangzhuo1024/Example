@@ -3,4 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="cycle_color">#33FFFFFF</color>
+    <color name="red_point_color">#EA3447</color>
+
+    <color name="background_color">#191919</color>
+
 </resources>
