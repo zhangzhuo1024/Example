@@ -19,5 +19,22 @@
         android:layout_width="180dp"
         android:layout_height="300dp" />
 
+    <Button
+        android:id="@+id/rect_to_ring"
+        android:text="方变圆"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/ring_to_rect"
+        android:text="圆变方"
+        android:layout_marginEnd="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 
 </RelativeLayout>

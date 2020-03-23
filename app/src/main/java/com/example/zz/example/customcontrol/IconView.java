@@ -29,11 +29,12 @@ public class IconView extends View {
     private float mHalfCycleTroke;
     private float mRedPointWidth;
     private float mCycleCentreWidth;
-    private float mSquareWidth;
-    private float mSquareRadius;
+    private float mRedSquareWidth;
+    private float mRedSquareRadius;
     private float mMoveDistance;
-    private float mRedPointRadius;
-    private float mRedPointOffset;
+    private float mRedLayoutRadius;
+    private float mRedLayoutOffset;
+    private float mRedLayoutWidth;
     private int mLayoutWidth;
     private int mLayoutHeight;
     private int mCycleColor;
@@ -70,8 +71,8 @@ public class IconView extends View {
         mRedPointWidth = typedArray.getDimension(R.styleable.IconView_red_point_width, getContext().getResources().getDimensionPixelSize(R.dimen.red_point_width));
         mRedPointColor = typedArray.getColor(R.styleable.IconView_red_point_color, getContext().getResources().getColor(R.color.red_point_color));
 
-        mSquareWidth = typedArray.getDimension(R.styleable.IconView_square_width, getContext().getResources().getDimensionPixelSize(R.dimen.square_width));
-        mSquareRadius = typedArray.getDimension(R.styleable.IconView_square_radius, getContext().getResources().getDimensionPixelSize(R.dimen.square_radius));
+        mRedSquareWidth = typedArray.getDimension(R.styleable.IconView_square_width, getContext().getResources().getDimensionPixelSize(R.dimen.square_width));
+        mRedSquareRadius = typedArray.getDimension(R.styleable.IconView_square_radius, getContext().getResources().getDimensionPixelSize(R.dimen.square_radius));
 
         mMoveDistance = typedArray.getDimension(R.styleable.IconView_move_distance, getContext().getResources().getDimensionPixelSize(R.dimen.move_distance));
 
@@ -89,6 +90,9 @@ public class IconView extends View {
         mCycleRect = new RectF(0, 0, 0, 0);
         mRedPointRect = new RectF(0, 0, 0, 0);
 
+        mRedLayoutOffset = 0f;
+        mRedLayoutWidth = mRedPointWidth;
+        mRedLayoutRadius = mRedLayoutWidth / 2;
     }
 
     @Override
@@ -102,18 +106,17 @@ public class IconView extends View {
         mCycleRect.right = mLayoutWidth - (mLayoutWidth - mCycleCentreWidth) / 2;
 
         setRectVerticalValue();
-        mRedPointRadius = mRedPointWidth / 2;
-        mRedPointOffset = 0f;
+        mRedLayoutRadius = mRedLayoutWidth / 2;
     }
 
     private void setRectVerticalValue() {
-        mCycleRect.top = mLayoutHeight - mCycleCentreWidth - mHalfCycleTroke - mRedPointOffset;
-        mCycleRect.bottom = mLayoutHeight - mHalfCycleTroke - mRedPointOffset;
+        mCycleRect.top = mLayoutHeight - mCycleCentreWidth - mHalfCycleTroke - mRedLayoutOffset;
+        mCycleRect.bottom = mLayoutHeight - mHalfCycleTroke - mRedLayoutOffset;
 
-        mRedPointRect.top = mLayoutHeight - (mCycleWidth / 2 - mRedPointWidth / 2) - mRedPointWidth - mRedPointOffset;
-        mRedPointRect.bottom = mLayoutHeight - (mCycleWidth / 2 - mRedPointWidth / 2) - mRedPointOffset;
-        mRedPointRect.left = (mLayoutWidth - mRedPointWidth) / 2;
-        mRedPointRect.right = mLayoutWidth - (mLayoutWidth - mRedPointWidth) / 2;
+        mRedPointRect.top = mLayoutHeight - (mCycleWidth / 2 - mRedLayoutWidth / 2) - mRedLayoutWidth - mRedLayoutOffset;
+        mRedPointRect.bottom = mLayoutHeight - (mCycleWidth / 2 - mRedLayoutWidth / 2) - mRedLayoutOffset;
+        mRedPointRect.left = (mLayoutWidth - mRedLayoutWidth) / 2;
+        mRedPointRect.right = mLayoutWidth - (mLayoutWidth - mRedLayoutWidth) / 2;
     }
 
     @Override
@@ -121,7 +124,7 @@ public class IconView extends View {
         super.onDraw(canvas);
         LogUtils.e("onDraw  ");
         canvas.drawRoundRect(mCycleRect, (mLayoutWidth - mCycleTroke) / 2, (mLayoutWidth - mCycleTroke) / 2, mCyclePaint);
-        canvas.drawRoundRect(mRedPointRect, mRedPointRadius, mRedPointRadius, mRedPointPaint);
+        canvas.drawRoundRect(mRedPointRect, mRedLayoutRadius, mRedLayoutRadius, mRedPointPaint);
     }
 
     @Override
@@ -161,18 +164,54 @@ public class IconView extends View {
     }
 
     public void startToMove(){
-        TransAnimator startValue = new TransAnimator(mRedPointWidth, mRedPointWidth / 2, 0f);
-        TransAnimator endValue = new TransAnimator(mSquareWidth, mSquareRadius, mMoveDistance);
-        ValueAnimator valueAnimator = ObjectAnimator.ofObject(new TransTypeEvaluator(), startValue, endValue);
-        valueAnimator.setDuration(3000);
+        TransAnimator redPointValue = new TransAnimator(mRedPointWidth, mRedPointWidth / 2, 0f);
+        TransAnimator redSquareValue = new TransAnimator(mRedSquareWidth, mRedSquareRadius, mMoveDistance);
+        ValueAnimator valueAnimator = ObjectAnimator.ofObject(new TransTypeEvaluator(), redPointValue, redSquareValue);
+        valueAnimator.setDuration(5000);
         valueAnimator.setInterpolator(new PathInterpolator(0.3f, 0f, 0, 1));
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 TransAnimator animatedValue = (TransAnimator) animation.getAnimatedValue();
-                mRedPointWidth = animatedValue.width;
-                mRedPointRadius = animatedValue.radius;
-                mRedPointOffset = animatedValue.offset;
+                mRedLayoutWidth = animatedValue.width;
+                mRedLayoutRadius = animatedValue.radius;
+                mRedLayoutOffset = animatedValue.offset;
+                setRectVerticalValue();
+                invalidate();
+            }
+        });
+
+        ValueAnimator cycleAlphaAnimator = ObjectAnimator.ofFloat(1.0f, 0);
+        cycleAlphaAnimator.setDuration(1800);
+        cycleAlphaAnimator.setInterpolator(new PathInterpolator(0.33f, 0, 0.67f,1));
+        cycleAlphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float v = (float) animation.getAnimatedValue() * mCyclePaint.getAlpha();
+                mCyclePaint.setAlpha((int) v);
+            }
+        });
+        valueAnimator.start();
+        cycleAlphaAnimator.start();
+    }
+
+    public void ringChangeToRect(boolean isRingToRect){
+        TransAnimator redPointValue = new TransAnimator(mRedPointWidth, mRedPointWidth / 2, 0f);
+        TransAnimator redSquareValue = new TransAnimator(mRedSquareWidth, mRedSquareRadius, 0f);
+        ValueAnimator valueAnimator;
+        if(isRingToRect){
+            valueAnimator = ObjectAnimator.ofObject(new TransTypeEvaluator(), redPointValue, redSquareValue);
+        } else {
+            valueAnimator = ObjectAnimator.ofObject(new TransTypeEvaluator(), redSquareValue, redPointValue);
+        }
+        valueAnimator.setDuration(5000);
+        valueAnimator.setInterpolator(new PathInterpolator(0.3f, 0f, 0, 1));
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                TransAnimator animatedValue = (TransAnimator) animation.getAnimatedValue();
+                mRedLayoutWidth = animatedValue.width;
+                mRedLayoutRadius = animatedValue.radius;
                 setRectVerticalValue();
                 invalidate();
             }
