@@ -13,7 +13,10 @@ import com.example.zz.example.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ClickEventActivity extends AppCompatActivity {
+/*
+事件分发机制测试，csdn中写了详细结果
+ */
+public class ClickEventActivity extends AppCompatActivity implements View.OnTouchListener {
 
     private static final String TAG = "ClickEventActivity";
     @BindView(R.id.button_click)
@@ -24,19 +27,48 @@ public class ClickEventActivity extends AppCompatActivity {
 //    private View mImageViewClick;
 
     @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        Log.i(TAG, "activity onTouch = " + event);
+        return false;
+    }
+
+
+    /**
+     * 在Activity的触摸屏事件派发中：
+     *
+     * 首先会触发Activity的dispatchTouchEvent方法。
+     * dispatchTouchEvent方法中如果是ACTION_DOWN的情况下会接着触发onUserInteraction方法。
+     * 接着在dispatchTouchEvent方法中会通过Activity的root View（id为content的FrameLayout），实质是ViewGroup，通过super.dispatchTouchEvent把touchevent派发给各个activity的子view，也就是我们再Activity.onCreat方法中setContentView时设置的view。
+     * 若Activity下面的子view拦截了touchevent事件(返回true)则Activity.onTouchEvent方法就不会执行。
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        Log.i(TAG, "activity dispatchTouchEvent = " + ev);
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.i(TAG, "activity onTouchEvent = " + event);
+        return super.onTouchEvent(event);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_click_event);
         ButterKnife.bind(this);
 
-        View activity = findViewById(R.id.contentView);
+        View contentView = findViewById(R.id.contentView);
         View myRelativeLayout = findViewById(R.id.MyRelativeLayout);
-        View myButton = findViewById(R.id.MyButton);
+        View myImageView = findViewById(R.id.MyImageView);
 
-        activity.setOnTouchListener(new View.OnTouchListener() {
+        contentView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.i(TAG, "activity onTouch = " + event);
+                Log.i(TAG, "contentView onTouch = " + event);
                 return false;
             }
         });
@@ -62,17 +94,17 @@ public class ClickEventActivity extends AppCompatActivity {
 //            }
 //        });
 
-        myButton.setOnTouchListener(new View.OnTouchListener() {
+        myImageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.i(TAG, "MyButton onTouch = " + v);
+                Log.i(TAG, "MyImageView onTouch = " + v);
                 return false;
             }
         });
-//        myButton.setOnClickListener(new View.OnClickListener() {
+//        myImageView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Log.i(TAG, "MyButton onClick = " + v);
+//                Log.i(TAG, "MyImageView onClick = " + v);
 //            }
 //        });
 
@@ -143,4 +175,6 @@ public class ClickEventActivity extends AppCompatActivity {
 //            }
 //        });
     }
+
+
 }

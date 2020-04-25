@@ -1,14 +1,10 @@
 package com.example.zz.example.clickevent;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
-import com.example.zz.example.opscreenrecorder.Interceptor.Interceptor;
 
 /**
  * Created by zhangzhuo.
@@ -54,6 +50,6 @@ public class MyRelativeLayout extends RelativeLayout {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.i("ClickEventActivity", "MyRelativeLayout onTouchEvent = " + event);
-        return true;
+        return super.onTouchEvent(event);
     }
 }

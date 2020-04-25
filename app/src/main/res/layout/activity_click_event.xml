@@ -16,8 +16,8 @@
         android:background="@color/colorPrimaryDark"
         android:gravity="center">
 
-        <com.example.zz.example.clickevent.MyButton
-            android:id="@+id/MyButton"
+        <com.example.zz.example.clickevent.MyImageView
+            android:id="@+id/MyImageView"
             android:background="@color/colorAccent"
             android:layout_width="200dp"
             android:layout_height="100dp" />
