@@ -122,7 +122,6 @@ public class IconView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        LogUtils.e("onDraw  ");
         canvas.drawRoundRect(mCycleRect, (mLayoutWidth - mCycleTroke) / 2, (mLayoutWidth - mCycleTroke) / 2, mCyclePaint);
         canvas.drawRoundRect(mRedPointRect, mRedLayoutRadius, mRedLayoutRadius, mRedPointPaint);
     }
@@ -180,14 +179,15 @@ public class IconView extends View {
                 invalidate();
             }
         });
-
+        mCyclePaint.setColor(mCycleColor);
         ValueAnimator cycleAlphaAnimator = ObjectAnimator.ofFloat(1.0f, 0);
         cycleAlphaAnimator.setDuration(1800);
         cycleAlphaAnimator.setInterpolator(new PathInterpolator(0.33f, 0, 0.67f,1));
+        final int cycleAlpha = mCyclePaint.getAlpha();
         cycleAlphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                float v = (float) animation.getAnimatedValue() * mCyclePaint.getAlpha();
+                float v = (float) animation.getAnimatedValue() * cycleAlpha;
                 mCyclePaint.setAlpha((int) v);
             }
         });

@@ -1,3 +1,4 @@
+import android.view.View
 import java.util.*
 import java.io.Serializable
 
@@ -68,6 +69,16 @@ fun 数据类和序列化() {
      *     在Java中的这个Serializable接口其实是给jvm看的，通知jvm，我不对这个类做序列化了，你(jvm)帮我序列化就好了。就是用来标记通知一下，提高效率的
      *      Serializable接口就是Java提供用来进行高效率的异地共享实例对象的机制，实现这个接口即可。
      *
+     *      案例：
+     *                val intent = Intent(context, BusinessActivity::class.java)
+     *                ntent.putExtra("seller", mSeller)
+     *                context.startActivity(intent)
+     *
+     *               val seller = intent.getSerializableExtra("seller") as Seller
+     *
+     *               以前我传的都是String，直接getStringExtra就行。后来看明白，SerializableExtra实现的接口可以传对象，
+     *               而不仅仅是简单的基本数据类型和String。
+     *
      */
 
 }
@@ -89,6 +100,37 @@ fun for循环点击事件() {
             println(item)
         }
     }
+
+//    点击事件写法及接口写法
+//    我们将把上面的代码转换成Kotlin（使用了Anko的toast函数）：
+
+//    view.setOnClickListener(object:OnClickListener	{
+//        override fun onClick(v:	View){
+//            toast("Click")
+//        }
+//    }
+//            很幸运的是，Kotlin允许Java库的一些优化，Interface中包含单个函数可以被替代 为一个函数。如果我们这么去定义了，它会正常执行：
+//    fun	setOnClickListener(listener:	(View)	->	Unit)
+
+//    一个lambda表达式通过参数的形式被定义在箭头的左边（被圆括号包围），然后在 箭头的右边返回结果值。在这个例子中，我们接收一个View，然后返回一个 Unit（没有东西）。所以根据这种思想，我们可以把前面的代码简化成这样：
+//    view.setOnClickListener({	view	->	toast("Click")})
+//    这是非常棒的简化！当我们定义了一个方法，我们必须使用大括号包围，然后在箭 头的左边指定参数，在箭头的右边返回函数执行的结果。如果左边的参数没有使用 到，我们甚至可以省略左边的参数：
+//    view.setOnClickListener({	toast("Click")	})
+//    如果这个函数的最后一个参数是一个函数，我们可以把这个函数移动到圆括号外 面：
+//    view.setOnClickListener()	{	toast("Click")	}
+//    并且，最后，如果这个函数只有一个参数，我们可以省略这个圆括号：
+//    view.setOnClickListener	{	toast("Click")	}
+//    比原始的Java代码简短了5倍多，并且更加容易理解它所做的事情。非常让人影响 深刻。
+
+// 所以，举一反三，最根本的是：当参数为listener这种接口时，原来的匿名内部类写法现在应该写为：
+//    {参数1，参数2 ... -> {需要运行的方法}}
+//
+//    如果是只有一个参数时并且这个listnenr可以拿到参数列表括号的外面
+//    如果只有一个接口参数时，方法原来的小括号也可以省略
+
+
+
+
 
     //循环二  点击事件一，点击事件后面加匿名内部类，用object修饰，后面是小括号里面在监听大括号
 //    for (i in 0 until main_bottom_bar.childCount) {

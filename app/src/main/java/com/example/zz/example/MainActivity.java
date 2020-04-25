@@ -13,6 +13,7 @@ import com.example.zz.example.extractorvideo.MediaExtractorActivity;
 import com.example.zz.example.game.PlaneMainActivity;
 import com.example.zz.example.mediaplayer.ServiceActivity;
 import com.example.zz.example.memorylink.MemoryLinkActivity;
+import com.example.zz.example.opscreenrecorder.OpMainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.click_extractor_video).setOnClickListener(this);
         findViewById(R.id.click_url).setOnClickListener(this);
         findViewById(R.id.click_customcontrol).setOnClickListener(this);
+        findViewById(R.id.click_mode).setOnClickListener(this);
 
 
     }
@@ -86,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.click_customcontrol:
                 Intent intent8 = new Intent(MainActivity.this, CustomControlActivity.class);
                 startActivity(intent8);
+                break;
+            case R.id.click_mode:
+                Intent intent9 = new Intent(MainActivity.this, OpMainActivity.class);
+                startActivity(intent9);
                 break;
             default:
                 return;

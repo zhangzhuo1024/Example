@@ -76,4 +76,11 @@
         android:layout_height="wrap_content"
         android:text="自定义控件"
         app:layout_constraintTop_toBottomOf="@id/click_url" />
+
+    <Button
+        android:id="@+id/click_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设计模式"
+        app:layout_constraintTop_toBottomOf="@id/click_customcontrol" />
 </android.support.constraint.ConstraintLayout>

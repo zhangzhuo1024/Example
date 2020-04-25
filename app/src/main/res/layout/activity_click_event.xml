@@ -1,34 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contentView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".clickevent.ClickEventActivity">
 
+
+    <com.example.zz.example.clickevent.MyRelativeLayout
+        android:id="@+id/MyRelativeLayout"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="200dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center">
+
+        <com.example.zz.example.clickevent.MyButton
+            android:id="@+id/MyButton"
+            android:background="@color/colorAccent"
+            android:layout_width="200dp"
+            android:layout_height="100dp" />
+    </com.example.zz.example.clickevent.MyRelativeLayout>
+
     <Button
         android:id="@+id/button_click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="button click" />
+        android:text="button click"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageview_click"
-        android:background="@drawable/ic_launcher_background"
-        app:layout_constraintTop_toBottomOf="@id/button_click"
-        android:layout_marginTop="8dp"
-        android:clickable="false"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ic_launcher_background"
+        android:clickable="false"
+        app:layout_constraintTop_toBottomOf="@id/button_click" />
 
     <ImageView
         android:id="@+id/imageview_click2"
-        android:background="@drawable/ic_launcher_background"
-        app:layout_constraintTop_toBottomOf="@id/button_click"
-        android:layout_marginTop="8dp"
-        android:clickable="false"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ic_launcher_background"
+        android:clickable="false"
+        app:layout_constraintTop_toBottomOf="@id/button_click" />
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
