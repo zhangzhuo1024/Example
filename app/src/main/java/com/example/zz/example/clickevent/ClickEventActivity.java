@@ -3,6 +3,7 @@ package com.example.zz.example.clickevent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -60,6 +61,8 @@ public class ClickEventActivity extends AppCompatActivity implements View.OnTouc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_click_event);
         ButterKnife.bind(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View inflate = inflater.inflate(R.layout.recycler_view_item, null);
 
         View contentView = findViewById(R.id.contentView);
         View myRelativeLayout = findViewById(R.id.MyRelativeLayout);

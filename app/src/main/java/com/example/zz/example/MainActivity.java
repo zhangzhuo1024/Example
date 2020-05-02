@@ -13,7 +13,7 @@ import com.example.zz.example.extractorvideo.MediaExtractorActivity;
 import com.example.zz.example.game.PlaneMainActivity;
 import com.example.zz.example.mediaplayer.ServiceActivity;
 import com.example.zz.example.memorylink.MemoryLinkActivity;
-import com.example.zz.example.opscreenrecorder.OpMainActivity;
+import com.example.zz.example.pattern.PatternActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,12 +23,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @BindView(R.id.click_media_play)
     Button clickMediaPlay;
-    private View mDatabase;
-    private View mGame;
-    private View mClickEvent;
-    private View mMemoryLink;
-    private View mRecyclerView;
-    private View mExtractorVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent8);
                 break;
             case R.id.click_mode:
-                Intent intent9 = new Intent(MainActivity.this, OpMainActivity.class);
-                startActivity(intent9);
+                ActivityUtils.getInstance().goToActivity(MainActivity.this, PatternActivity.class);
                 break;
             default:
                 return;

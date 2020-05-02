@@ -1,4 +1,4 @@
-package com.example.zz.example.opscreenrecorder.mvp;
+package com.example.zz.example.pattern.responsibilitychain.mvp;
 
 /**
  * Created by zhangzhuo.

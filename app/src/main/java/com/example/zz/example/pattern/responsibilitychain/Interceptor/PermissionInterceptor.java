@@ -1,4 +1,4 @@
-package com.example.zz.example.opscreenrecorder.Interceptor;
+package com.example.zz.example.pattern.responsibilitychain.Interceptor;
 
 import android.app.Activity;
 import android.util.Log;
