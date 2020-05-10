@@ -1,1 +1,1 @@
-include ':app', ':kotlin', ':zzplayer', ':opscreenrecorder'
+include ':app', ':kotlin', ':zzplayer', ':opscreenrecorder', ':remoteservice'

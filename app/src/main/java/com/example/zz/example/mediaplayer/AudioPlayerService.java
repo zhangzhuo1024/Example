@@ -9,8 +9,14 @@ import android.util.Log;
 public class AudioPlayerService extends Service {
     private static final String TAG = "AudioPlayerService";
     private IBinder myBinder = new MyBinder();
+    private CallBack mCallback;
 
     public AudioPlayerService() {
+    }
+
+    public void setCallBack(CallBack callBack){
+        this.mCallback = callBack;
+
     }
 
     @Override
@@ -20,6 +26,10 @@ public class AudioPlayerService extends Service {
     }
 
     class MyBinder extends Binder implements Imusic{
+
+        public AudioPlayerService getAudioPlayerService(){
+            return AudioPlayerService.this;
+        }
 
         @Override
         public void callStart() {
@@ -34,6 +44,7 @@ public class AudioPlayerService extends Service {
         @Override
         public void callResume() {
             resume();
+            mCallback.process(66);//通过mCallback把计算的数据传给activity
         }
     }
     public void start(){
@@ -44,5 +55,9 @@ public class AudioPlayerService extends Service {
     }
     public void resume(){
         Log.i(TAG, "resume music");
+    }
+
+    interface CallBack{
+        void process(int process);
     }
 }
