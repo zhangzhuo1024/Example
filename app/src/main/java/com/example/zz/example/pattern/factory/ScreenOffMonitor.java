@@ -1,4 +1,4 @@
-package com.example.zz.example.pattern.responsibilitychain.mvp;
+package com.example.zz.example.pattern.factory;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

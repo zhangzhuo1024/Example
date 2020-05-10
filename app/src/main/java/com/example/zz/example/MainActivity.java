@@ -11,6 +11,7 @@ import com.example.zz.example.clickspanner.WeiboContentTestActivity;
 import com.example.zz.example.customcontrol.CustomControlActivity;
 import com.example.zz.example.extractorvideo.MediaExtractorActivity;
 import com.example.zz.example.game.PlaneMainActivity;
+import com.example.zz.example.handler.HandlerActivity;
 import com.example.zz.example.mediaplayer.ServiceActivity;
 import com.example.zz.example.memorylink.MemoryLinkActivity;
 import com.example.zz.example.pattern.PatternActivity;
@@ -84,10 +85,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent8);
                 break;
             case R.id.click_mode:
+                ActivityUtils.getInstance().goToActivity(MainActivity.this, HandlerActivity.class);
+
+                break;
+            case R.id.click_handler:
                 ActivityUtils.getInstance().goToActivity(MainActivity.this, PatternActivity.class);
                 break;
             default:
                 return;
         }
+    }
+
+    public boolean Find(int target, int [][] array) {
+        for(int i = 0; i < array.length; i++){
+            for(int j = 0; j < array[0].length; j++){
+                if(target == array[i][j]){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

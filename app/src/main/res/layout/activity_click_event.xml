@@ -12,7 +12,7 @@
         android:id="@+id/MyRelativeLayout"
         android:layout_width="300dp"
         android:layout_height="200dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="150dp"
         android:background="@color/colorPrimaryDark"
         android:gravity="center">
 
@@ -47,6 +47,15 @@
         android:background="@drawable/ic_launcher_background"
         android:clickable="false"
         app:layout_constraintTop_toBottomOf="@id/button_click" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:background="@android:color/darker_gray"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="350dp">
+
+    </android.support.v4.view.ViewPager>
 
 
 </RelativeLayout>

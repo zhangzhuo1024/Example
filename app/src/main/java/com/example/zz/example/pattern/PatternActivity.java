@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.zz.example.ActivityUtils;
 import com.example.zz.example.R;
+import com.example.zz.example.pattern.factory.FactoryActivity;
 import com.example.zz.example.pattern.observer.ObserverActivity;
 
 import com.example.zz.example.pattern.responsibilitychain.ResponsibilityChainActivity;
@@ -28,6 +29,13 @@ public class PatternActivity extends Activity {
         findViewById(R.id.responsibility_chain_pattern).setOnClickListener(v -> {
             ActivityUtils.getInstance().goToActivity(PatternActivity.this, ResponsibilityChainActivity.class);
         });
+
+        findViewById(R.id.factory_pattern).setOnClickListener(v -> {
+            ActivityUtils.getInstance().goToActivity(PatternActivity.this, FactoryActivity.class);
+        });
+
+
+
 
     }
 }

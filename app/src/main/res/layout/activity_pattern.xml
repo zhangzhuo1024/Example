@@ -16,6 +16,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/factory_pattern"
+        android:text="工厂模式"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/observer_pattern"
         android:text="观察者模式"
         />

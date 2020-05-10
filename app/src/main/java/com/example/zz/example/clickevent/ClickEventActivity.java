@@ -1,6 +1,8 @@
 package com.example.zz.example.clickevent;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +26,8 @@ public class ClickEventActivity extends AppCompatActivity implements View.OnTouc
     Button mButtonClick;
     @BindView(R.id.imageview_click)
     ImageView mImageviewClick;
-//    private View mButtonClick;
+    private ViewPager mViewPager;
+    //    private View mButtonClick;
 //    private View mImageViewClick;
 
     @Override
@@ -61,9 +64,17 @@ public class ClickEventActivity extends AppCompatActivity implements View.OnTouc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_click_event);
         ButterKnife.bind(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View inflate = inflater.inflate(R.layout.recycler_view_item, null);
 
+        //recycleview中添加viewpager（轮播图） 事件冲突  外卖帝首页界面
+
+
+        //viewpager中加recycleView 事件冲突  淘宝微淘界面    ----没冲突
+        //viewpager中加recycleview，recycleview头部加viewpager，要求viewpager到边了之后外层viewpager跟着动  ---直接写没冲突
+        mViewPager = findViewById(R.id.view_pager);
+        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter();
+        mViewPager.setAdapter(myViewPagerAdapter);
+
+        //事件分发速查表测试
         View contentView = findViewById(R.id.contentView);
         View myRelativeLayout = findViewById(R.id.MyRelativeLayout);
         View myImageView = findViewById(R.id.MyImageView);

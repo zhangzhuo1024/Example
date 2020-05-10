@@ -26,11 +26,8 @@ public class ObserverActivity extends Activity {
         setContentView(R.layout.activity_observer);
         mObserverButton = findViewById(R.id.observer_button);
 
-        MyObservable.getInstance().addObserver(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-                mObserverButton.setText((String) arg);
-            }
+        MyObservable.getInstance().addObserver((observable, v) -> {
+            mObserverButton.setText((String) v);
         });
 
         findViewById(R.id.observer_button).setOnClickListener(v -> {
