@@ -31,4 +31,17 @@
         android:id="@+id/responsibility_chain_pattern"
         android:text="职责链模式"
         />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_center_pattern"
+        android:text="消息总线"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_bus_pattern"
+        android:text="Event Bus框架"
+        />
 </LinearLayout>

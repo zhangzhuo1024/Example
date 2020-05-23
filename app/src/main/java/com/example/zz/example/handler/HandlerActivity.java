@@ -35,8 +35,6 @@ public class HandlerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handler);
-        Looper.prepare();
-        Looper.loop();
         findViewById(R.id.handler_button).setOnClickListener(v->{
             new Thread(new Runnable() {
                 @Override

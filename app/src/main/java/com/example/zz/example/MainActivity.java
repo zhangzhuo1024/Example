@@ -1,5 +1,6 @@
 package com.example.zz.example;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setTitle("加油，我的世界 ！");
+        }
         ButterKnife.bind(this);
         findViewById(R.id.database).setOnClickListener(this);
         findViewById(R.id.game).setOnClickListener(this);
@@ -39,8 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.click_url).setOnClickListener(this);
         findViewById(R.id.click_customcontrol).setOnClickListener(this);
         findViewById(R.id.click_mode).setOnClickListener(this);
-
-
+        findViewById(R.id.click_handler).setOnClickListener(this);
     }
 
     @OnClick(R.id.click_media_play)
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        LogUtils.e("onClick ");
         switch (v.getId()) {
             case R.id.database:
                 Intent intent = new Intent(MainActivity.this, DatabaseActivity.class);
@@ -85,11 +90,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent8);
                 break;
             case R.id.click_mode:
-                ActivityUtils.getInstance().goToActivity(MainActivity.this, HandlerActivity.class);
-
+                ActivityUtils.getInstance().goToActivity(MainActivity.this, PatternActivity.class);
                 break;
             case R.id.click_handler:
-                ActivityUtils.getInstance().goToActivity(MainActivity.this, PatternActivity.class);
+                ActivityUtils.getInstance().goToActivity(MainActivity.this, HandlerActivity.class);
                 break;
             default:
                 return;

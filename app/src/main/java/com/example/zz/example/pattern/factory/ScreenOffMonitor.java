@@ -5,6 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.example.zz.example.pattern.eventbus.MessageEvent;
+import com.example.zz.example.pattern.eventcenter.EventCenter;
+import com.example.zz.example.pattern.eventcenter.EventMessage;
+import com.example.zz.example.pattern.eventcenter.EventType;
+
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Created by zhangzhuo.
  * Blog: https://blog.csdn.net/zhangzhuo1024
@@ -17,6 +24,12 @@ public class ScreenOffMonitor implements BaseMonitor {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+            //通过消息总线发送消息（内部实现是接口回调）
+            EventCenter.getInstance().fireEvnet(EventType.SCREEN_OFF);
+//            EventCenter.getInstance().fireEvnetMessage(new EventMessage(EventType.SCREEN_OFF));
+
+            //通过EVENT BUS 发送消息（内部实现是基于观察者模式）
+            EventBus.getDefault().post(new MessageEvent(EventType.SCREEN_OFF));
         }
     };
 

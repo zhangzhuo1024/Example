@@ -42,7 +42,7 @@ public class FactoryActivity extends AppCompatActivity {
 
 
     private MonitorType[] mMonitorTypes = {MonitorType.SCREEN_OFF, MonitorType.PHONE_STATE_CHANGE};
-    private ArrayList<BaseMonitor> monitorArrayList = null;
+    private ArrayList<BaseMonitor> monitorArrayList = new ArrayList<>();
 
     private void initMonitor() {
         for (MonitorType mMonitorType : mMonitorTypes) {

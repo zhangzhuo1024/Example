@@ -7,88 +7,82 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="加油，我的世界"
-        android:alpha="0.5"
-        android:textSize="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/database"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="进入收据库" />
 
-    <Button
-        android:id="@+id/game"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="进入游戏界面"
-        app:layout_constraintTop_toBottomOf="@id/database" />
+            <Button
+                android:id="@+id/database"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="进入收据库"/>
 
-    <Button
-        android:id="@+id/click_event"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ClickEvent"
-        app:layout_constraintTop_toBottomOf="@id/game" />
-    <Button
-        android:id="@+id/click_media_play"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="多媒体，音乐，视频，aidl"
-        app:layout_constraintTop_toBottomOf="@id/click_event" />
-    <Button
-        android:id="@+id/click_memory_link"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="内存泄漏"
-        app:layout_constraintTop_toBottomOf="@id/click_event" />
-    <Button
-        android:id="@+id/click_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="RecyclerView测试"
-        app:layout_constraintTop_toBottomOf="@id/click_event" />
-    <Button
-        android:id="@+id/click_extractor_video"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="分离视频"
-        app:layout_constraintTop_toBottomOf="@id/click_recycler_view" />
+            <Button
+                android:id="@+id/game"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="进入游戏界面" />
 
-    <Button
-        android:id="@+id/click_url"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="富文本"
-        app:layout_constraintTop_toBottomOf="@id/click_extractor_video" />
+            <Button
+                android:id="@+id/click_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ClickEvent"/>
 
-    <Button
-        android:id="@+id/click_customcontrol"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="自定义控件"
-        app:layout_constraintTop_toBottomOf="@id/click_url" />
+            <Button
+                android:id="@+id/click_media_play"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="多媒体，音乐，视频，aidl"/>
 
-    <Button
-        android:id="@+id/click_mode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="设计模式"
-        app:layout_constraintTop_toBottomOf="@id/click_customcontrol" />
+            <Button
+                android:id="@+id/click_memory_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="内存泄漏"/>
 
-    <Button
-        android:id="@+id/click_handler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/click_mode"
-        android:text="handler" />
+            <Button
+                android:id="@+id/click_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RecyclerView测试"/>
+
+            <Button
+                android:id="@+id/click_extractor_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="分离视频" />
+
+            <Button
+                android:id="@+id/click_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="富文本" />
+
+            <Button
+                android:id="@+id/click_customcontrol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="自定义控件"/>
+
+            <Button
+                android:id="@+id/click_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="设计模式"/>
+
+            <Button
+                android:id="@+id/click_handler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="handler"/>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

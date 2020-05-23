@@ -19,6 +19,8 @@ public class SingletonActivity extends Activity {
 
         findViewById(R.id.hungry).setOnClickListener(v -> {
             HungrySingle.getsInstance().doSomething();
+            String s = "" ;
+            char[] chars = s.toCharArray();
         });
 
         findViewById(R.id.lazy).setOnClickListener(v -> {

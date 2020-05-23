@@ -18,11 +18,38 @@ public class HomeActivity extends Activity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new MyRecyclerViewAdapter(initData()));
+
+
+    }
+
+    public ArrayList<String> PermutationHelp(StringBuilder str) {
+        ArrayList<String> result = new ArrayList<String>();
+        if (str.length() == 1) {
+            result.add(str.toString());
+        } else {
+            for (int i = 0; i < str.length(); i++) {
+                if (i == 0 || str.charAt(i) != str.charAt(0)) {
+                    char temp = str.charAt(i);
+                    str.setCharAt(i, str.charAt(0));
+                    str.setCharAt(0, temp);
+                    ArrayList<String> newResult = PermutationHelp(new StringBuilder(str.substring(1)));
+                    for (int j = 0; j < newResult.size(); j++)
+                        result.add(str.substring(0, 1) + newResult.get(j));
+                    //用完还是要放回去的
+                    temp = str.charAt(0);
+                    str.setCharAt(0, str.charAt(i));
+                    str.setCharAt(i, temp);
+                }
+            }
+            //需要在做一个排序操作
+
+        }
+        return result;
     }
 
     private ArrayList<String> initData() {
         ArrayList<String> aa = new ArrayList<>();
-        for(int i = 'A'; i < 'z'; i++){
+        for (int i = 'A'; i < 'z'; i++) {
             aa.add("" + (char) i);
         }
         return aa;
