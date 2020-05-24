@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".pictureload.PictureLoadActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:text="手写图片加载框架核心原理"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:text="网络加载图片\n
+        优化一：三级缓存复用，避免每次加载，加载时对于几个G超大图片，先加载长宽，然后进行缩放，最后按缩放后大小进行加载\n
+        优化二：内存存储时，使用LruCache代替集合，便于回收内存\n
+        优化三：用线程池管理线程，更进一步，用Async代替自定义线程池+handler，同时要注意async的优缺点\n
+        优化四：知道原理后使用三方框架Picasso、Glide、Fresco，三者的优缺点" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/pic_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="6dp" />
+
+</LinearLayout>
