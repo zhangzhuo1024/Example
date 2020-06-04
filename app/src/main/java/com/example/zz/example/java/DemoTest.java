@@ -1,7 +1,13 @@
 package com.example.zz.example.java;
 
 
+
+import android.util.Log;
+
 import com.example.zz.example.datastructures.TreeNodeDemo;
+
+import java.util.Scanner;
+import java.util.TreeSet;
 
 /**
  * Created by zhangzhuo.
@@ -11,12 +17,28 @@ import com.example.zz.example.datastructures.TreeNodeDemo;
 public class DemoTest {
     public static void main(String[] args) {
 
-
+        明明随机数();
+        String s = "";
+        s.substring(1);
+        Integer.valueOf()
+        Log.e("qq","ss");
 
 
         int[] ints = {1, -2, 3, 10, -4, 7, 2, -5};
         FindGreatestSumOfSubArray(ints);
 
+    }
+
+    private static void 明明随机数() {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()) {
+            TreeSet<Integer> out = new TreeSet<>();
+            Integer size = Integer.valueOf(scanner.next());
+            for (int i = 0; i < size; i++) {
+                out.add(Integer.valueOf(scanner.next()));
+            }
+            out.forEach( x-> System.out.println(x));
+        }
     }
 
     public static int TreeDepth(TreeNode root) {
