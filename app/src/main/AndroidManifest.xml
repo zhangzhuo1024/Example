@@ -49,6 +49,8 @@
         <activity android:name=".pattern.responsibilitychain.ResponsibilityChainActivity" />
         <activity android:name=".pattern.singleton.SingletonActivity" />
         <activity android:name=".pattern.eventcenter.EventCenterActivity" />
+        <activity android:name=".mediaplayer.ZzPlayerActivity" />
+        <activity android:name=".mediaplayer.zzplayer.PlayActivity" />
 
         <service
             android:name=".mediaplayer.AudioPlayerService"

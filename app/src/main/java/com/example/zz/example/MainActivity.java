@@ -19,6 +19,7 @@ import com.example.zz.example.extractorvideo.MediaExtractorActivity;
 import com.example.zz.example.game.PlaneMainActivity;
 import com.example.zz.example.handler.HandlerActivity;
 import com.example.zz.example.mediaplayer.ServiceActivity;
+import com.example.zz.example.mediaplayer.ZzPlayerActivity;
 import com.example.zz.example.memorylink.MemoryLinkActivity;
 import com.example.zz.example.pattern.PatternActivity;
 import com.example.zz.example.pictureload.PictureLoadActivity;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.click_mode).setOnClickListener(this);
         findViewById(R.id.click_handler).setOnClickListener(this);
         findViewById(R.id.pic_load).setOnClickListener(this);
+        findViewById(R.id.zz_player).setOnClickListener(this);
         if (Build.VERSION.SDK_INT >= 23) {//6.0才用动态权限
             initPermission();
         }
@@ -134,6 +136,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.pic_load:
                 ActivityUtils.getInstance().goToActivity(MainActivity.this, PictureLoadActivity.class);
+                break;
+            case R.id.zz_player:
+                ActivityUtils.getInstance().goToActivity(MainActivity.this, ZzPlayerActivity.class);
                 break;
             default:
                 return;

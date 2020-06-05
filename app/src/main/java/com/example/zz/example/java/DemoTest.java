@@ -20,7 +20,7 @@ public class DemoTest {
         明明随机数();
         String s = "";
         s.substring(1);
-        Integer.valueOf()
+//        Integer.valueOf();
         Log.e("qq","ss");
 
 
