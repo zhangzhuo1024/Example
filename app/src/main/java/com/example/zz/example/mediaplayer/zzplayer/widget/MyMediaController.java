@@ -414,14 +414,14 @@ public class MyMediaController extends FrameLayout {
 // 所有孩子的触摸都是由MyMediaControl分发的，所以在 dispatchTouchEvent 方法中 判断触摸事件类型，进行显示和隐藏的处理
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                show();
-                break;
-            case MotionEvent.ACTION_UP:
-                hide();
-                break;
-        }
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                show();
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                hide();
+//                break;
+//        }
         return super.dispatchTouchEvent(ev);
     }
 
