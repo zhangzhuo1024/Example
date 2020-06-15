@@ -50,7 +50,10 @@
         <activity android:name=".pattern.singleton.SingletonActivity" />
         <activity android:name=".pattern.eventcenter.EventCenterActivity" />
         <activity android:name=".mediaplayer.ZzPlayerActivity" />
-        <activity android:name=".mediaplayer.zzplayer.PlayActivity" />
+        <activity
+            android:name=".mediaplayer.zzplayer.PlayActivity"
+            android:theme="@style/AppTheme.FullScreen"
+            android:screenOrientation="landscape" />
 
         <service
             android:name=".mediaplayer.AudioPlayerService"
