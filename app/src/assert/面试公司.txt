@@ -1,0 +1,125 @@
+拉钩：
+武汉光瑾丰 150-500人 10k-15k
+1、根据项目计划，负责手机模块的开发、调试以及功能、性能优化。
+2、根据项目计划进行软件缺陷分析、调试、解决和跟踪，并推动平台或第三方软件供应商解决问题。
+3、负责相关需求的分析与可行性评估
+4、负责功能、技术、测试文档的编写
+
+慧美丰科技研发部  9k-15k
+1、 计算机相关专业，本科以上学历，3年以上工作经验，沟通能力强，能够带领团队完成项目；
+2、 具有扎实的计算机专业知识，熟悉常用的数据结构以及算法；
+3、 具有一定的软件设计能力，熟悉常用的设计模式，能够通过UML工具建模；
+4、 具备熟练使用Java语言开发能力，熟悉JNI开发；
+5、 熟悉安卓体系结构，熟悉安卓四大组件、xml布局、网络编程、多线程编程；熟悉安卓应用性能调优，并具有一定的应用优化经验；
+6、 熟悉安卓系统底层技术或对安卓系统安全有一定经验者优先；
+7、 熟悉Vue、js等前端框架，有Weex实际开发经验;熟悉html5特性，css3的样式，熟悉JavaScript 等Web前端开发技术。
+
+
+长江云新媒体集团  150-500人 12k-18k
+1、至少五年以上Android平台开发经验，有大型App上线开发经验者优先；
+2、精通掌握JAVA技术，熟悉面向对象编程设计，具备扎实的编程基础；
+3、精通Android应用开发框架及Activity生命周期、熟悉Android UI/Framework开发，熟练使用Android SDK、熟练使用SQLite数据库；
+4、精通移动网络通信机制，对Socket通信，TCP/IP和HTTP有实际开发经验；
+5、良好编程习惯和文档编写习惯、具备良好的分析解决问题能力、有良好的沟通能力；
+6、具备良好的框架设计能力和高质量编码能力；
+7、能够独立解决疑难问题，具备技术前瞻性，熟悉Android运行机制，对团队技术产生影响力，带领团队技术能力的提升；
+8、良好的数据结构和算法基础；
+9、具备混合式开发经验，了解H5/JS技术；
+10、熟悉NDK开发，具有上线NDK开发经验者尤佳；
+
+优品财富管理有限公司技术 7500-2000人 k-12k 
+1.负责android终端的开发和预研工作，主要包括以下内容：
+2.实现产品提出的需求，按照设计师的设计实现UI；
+3.软件模块的优化和重构；
+4.软件问题的快速分析和修复。
+
+
+澳润激  15-50人 7k-12k 13k-18k 
+• 熟练Android SDK；
+• 注重编程效率，有丰富的Android工程化与设计解耦能力；
+• 熟悉Android CI构建 ；
+• 对网络并发、网络通信安全有较全面的理解；
+• 对H5开发具有一定的了解；
+• 具有中大型项目的模块拆分设计能力，熟知常用框架技术原理实现；
+
+蚂蚁外包：
+一面：
+1、activityA 跳转到activityB
+	显示界面  A onCreate onStart onResum  
+	点击跳转  A onPause B onCreate onStart onResume    A onStop
+	点击返回  B onPause   A onRestart onStart onResume   B onStop onDestory
+	再点返回  A onPause onStop onDestory
+	
+2、性能界面优化，xml布局层次，view绘制流程
+一、启动优化
+二、运行时卡顿优化
+三、内存优化
+四、apk体积优化
+五、电量优化
+
+
+3、事件分发流程，事件冲突viewpager和recycleview事件冲突
+事件分发速查表，viewpager和recycleview事件冲突
+
+4、fragment和activity的区别
+
+5、网络加密，数据传输
+6、三方框架用过哪些
+7、文字添加描边
+没有现成的文字描边的属性：
+使用自定义
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(mStrokeWidth);
+
+
+北京景益网络（电商，类似盒马生鲜）
+1.app点击图标到启动过程
+2.约束布局
+3.serviceIntent
+4.线程启动三种方式的区别
+
+
+深圳有为信息
+车载安卓高级开发岗
+
+笔试（每题6分）：
+1.activity四种启动模式，常用场景
+2.广播分类，发广播的几种方式
+3.进程间通信方式，写四种
+4.手写线程安全单例
+5.线程与进程区别，两个应用如何共进程，单个activity如何被不同进程共享
+6.jdk ndk sdk adt  在安卓开发中的作用
+7.使用过的框架，异步框架，依赖注解框架，网络框架，视频播放器框架（越多越好）
+8.ANR OOM问题及解决简述
+9.手写一个泛型类
+10.写出五个adb命令，如adb push
+11.view绘制流程
+12.不记得
+
+编程题（任选一题，30分）：
+1. 坐标中有三个点，是否可以确定一个圆，如果可以，打印圆心坐标，如果不行，打印无法组成圆
+2.输入正整数n，将n分成m个数之和，当m个数之积最大时，打印这m个数，如输入8，打印 2,3,3
+
+翻译题（10分）：
+the kernel configuration is kept in the file named .config in the top directionary of kernel source tree。if you expanded the  directionary of the kernel source code, there is no file named .config, you need create. you can create by strach or, ,,,,,
+
+面试
+自我介绍，换工作原因
+面试没答出来的题目：
+1.多媒体中HAL与framework互交接口
+1.framework中音频框架了解
+2.录屏视频格式rgb yuv ，单帧分析工具软件及分析方法
+3.jni的开发，c /c++ 了解多少
+
+总结：简历写的熟悉音视频编解码，结果了解深度不够深，视频只操作buffer，没注意视频颜色空间
+jni c / c ++  了解太少，音视频框架了解不过关
+
+
+芯知
+handler原理
+事件分发原理
+Localbradcast 原理
+aidl实现
+anr
+
+
