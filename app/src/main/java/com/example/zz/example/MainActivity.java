@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.zz.example.broadcast.BroadcastActivity;
 import com.example.zz.example.clickevent.ClickEventActivity;
 import com.example.zz.example.clickspanner.WeiboContentTestActivity;
 import com.example.zz.example.customcontrol.CustomControlActivity;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.click_handler).setOnClickListener(this);
         findViewById(R.id.pic_load).setOnClickListener(this);
         findViewById(R.id.zz_player).setOnClickListener(this);
+        findViewById(R.id.broadcast).setOnClickListener(this);
         if (Build.VERSION.SDK_INT >= 23) {//6.0才用动态权限
             initPermission();
         }
@@ -139,6 +141,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.zz_player:
                 ActivityUtils.getInstance().goToActivity(MainActivity.this, ZzPlayerActivity.class);
+                break;
+            case R.id.broadcast:
+                ActivityUtils.getInstance().goToActivity(MainActivity.this, BroadcastActivity.class);
                 break;
             default:
                 return;
