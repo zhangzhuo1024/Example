@@ -23,8 +23,9 @@
         <TextView
             android:id="@+id/okhttp_enqueue_result"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_margin="6dp"
+            android:scrollbars="vertical"
             android:text="结果" />
     </LinearLayout>
 
@@ -63,8 +64,9 @@
         <TextView
             android:id="@+id/retrofit_enqueue_result"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_margin="6dp"
+            android:scrollbars="vertical"
             android:text="结果" />
     </LinearLayout>
 
@@ -85,6 +87,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
+            android:text="结果" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/retrofit_and_rxjava_execute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:text="retrofit2 + RxJava2异步请求" />
+
+        <TextView
+            android:id="@+id/retrofit_and_rxjava_execute_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:scrollbars="vertical"
             android:text="结果" />
     </LinearLayout>
 

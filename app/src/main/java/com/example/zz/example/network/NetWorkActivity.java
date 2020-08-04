@@ -1,10 +1,10 @@
 package com.example.zz.example.network;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,13 +17,20 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 
 /**
@@ -32,7 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetWorkActivity extends AppCompatActivity {
 
-    public static final String mUrlApi = "https://api.apiopen.top/getJoke?page=1&count=2&type=video";
+    public static final String mUrlApi = "https://api.apiopen.top/";
     private Button mOkHttpEnqueue;
     private TextView mOkHttpEnqueueResult;
     private Button mOkHttpExecute;
@@ -41,6 +48,8 @@ public class NetWorkActivity extends AppCompatActivity {
     private TextView mRetrofitEnqueueResult;
     private Button mRetrofitExecute;
     private TextView mRetrofiExecuteResult;
+    private Button mRetrofitRxjavaExecute;
+    private TextView mRetrofiRxjavaExecuteResult;
     private Handler mHandler;
 
     public static final String TYPE_GIRLS = "jandan.get_ooxx_comments";
@@ -61,15 +70,22 @@ public class NetWorkActivity extends AppCompatActivity {
 
         mOkHttpEnqueue = findViewById(R.id.okhttp_enqueue);
         mOkHttpEnqueueResult = findViewById(R.id.okhttp_enqueue_result);
+        mOkHttpEnqueueResult.setMovementMethod(new ScrollingMovementMethod());
 
         mOkHttpExecute = findViewById(R.id.okhttp_execute);
         mOkHttpExecuteResult = findViewById(R.id.okhttp_execute_result);
 
         mRetrofitEnqueue = findViewById(R.id.retrofit_enqueue);
         mRetrofitEnqueueResult = findViewById(R.id.retrofit_enqueue_result);
+        mRetrofitEnqueueResult.setMovementMethod(new ScrollingMovementMethod());
 
         mRetrofitExecute = findViewById(R.id.retrofit_execute);
         mRetrofiExecuteResult = findViewById(R.id.retrofit_execute_result);
+
+
+        mRetrofitRxjavaExecute = findViewById(R.id.retrofit_and_rxjava_execute);
+        mRetrofiRxjavaExecuteResult = findViewById(R.id.retrofit_and_rxjava_execute_result);
+        mRetrofiRxjavaExecuteResult.setMovementMethod(new ScrollingMovementMethod());
 
         mOkHttpEnqueue.setOnClickListener(v -> {
 
@@ -77,7 +93,7 @@ public class NetWorkActivity extends AppCompatActivity {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             OkHttpClient okHttpClient = builder.build();
             Request.Builder builder1 = new Request.Builder();
-            builder1.url("https://api.apiopen.top/getJoke?page=1&count=2&type=video");
+            builder1.url(mUrlApi + "getJoke?page=1&count=2&type=text");
             Request request = builder1.build();
             okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
 
@@ -90,6 +106,8 @@ public class NetWorkActivity extends AppCompatActivity {
                 public void onResponse(Call call, Response response) throws IOException {
                     //运行在子线程
                     parseJsonWithJsonObject(response);
+
+
                     String s = "";
                     for (int i = 0; i < nameList.size(); i++) {
                         s = s + nameList.get(i) + "  ";
@@ -98,7 +116,13 @@ public class NetWorkActivity extends AppCompatActivity {
                     String finalS = s;
                     mHandler.post(() -> {
                         //通过handler发送到主线程更新ui
-                        mOkHttpEnqueueResult.setText("收到的结果是：" + finalS);
+
+                        mOkHttpEnqueueResult.setText("收到的结果是：" +
+                                "\nresponse.code() = " + code +
+                                "\nresponse.body() = " + body +
+                                "\nresponse.message() = " + message +
+                                "\nresponse.body().string() = " + string +
+                                "\n每个条目的title = " + finalS);
                     });
                 }
             });
@@ -109,7 +133,7 @@ public class NetWorkActivity extends AppCompatActivity {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             OkHttpClient okHttpClient = builder.build();
             Request.Builder builder1 = new Request.Builder();
-            builder1.url("https://api.douban.com/v2/book/search?q=金瓶梅&tag=&start=0&count=1");
+            builder1.url(mUrlApi);
             Request request = builder1.build();
 
             try {
@@ -119,8 +143,6 @@ public class NetWorkActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         });
 
 
@@ -131,18 +153,28 @@ public class NetWorkActivity extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-            JanDanApiService mService = retrofit.create(JanDanApiService.class);
-            retrofit2.Call<BelleEntity> detailData = mService.getDetailData(mUrlApi, TYPE_GIRLS, 1);
-            detailData.enqueue(new Callback<BelleEntity>() {
+            NewsService mService = retrofit.create(NewsService.class);
+            //此处我们添加的返回数据类型是ResponseBody，因为不知道服务其中的数据类型是怎样定义的
+            //如果此处像zztakeout的知道数据类型，可以按照服务器的数据类型新建实例对象，如ResponseInfo这样的进行获取，获取之后可以直接转化成集合
+            retrofit2.Call<ResponseBody> call = mService.getJokeList(1, 3, "text");
+            call.enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(retrofit2.Call<BelleEntity> call, retrofit2.Response<BelleEntity> response) {
+                public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                     //运行在主线程
-                    Log.e("111111", response + "");
-                    mRetrofitEnqueueResult.setText(response.message());
+                    int code = response.code();
+                    ResponseBody body = response.body();
+                    try {
+                        String string = body.string();
+                        mRetrofitEnqueueResult.setText("收到的结果是：" +
+                                "\nresponse.code() = " + code +
+                                "\nresponse.body().string() = " + string);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
-                public void onFailure(retrofit2.Call<BelleEntity> call, Throwable t) {
+                public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
                     //运行在主线程
                 }
             });
@@ -152,20 +184,62 @@ public class NetWorkActivity extends AppCompatActivity {
         mRetrofitExecute.setOnClickListener(v -> {
             //Retrofit同步请求--对应enqueue方法
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://api.douban.com/v2/")
+                    .baseUrl(mUrlApi)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-            BookService bookService = retrofit.create(BookService.class);
-            retrofit2.Call<Book> call = bookService.getSearchBook("金瓶梅", null, 1, 1);
+            NewsService mService = retrofit.create(NewsService.class);
+            retrofit2.Call<ResponseBody> call = mService.getJokeList(1, 3, "text");
             try {
                 //由于是在主线程执行网络请求，会报错
-                retrofit2.Response<Book> execute = call.execute();
+                retrofit2.Response<ResponseBody> execute = call.execute();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
+        mRetrofitRxjavaExecute.setOnClickListener(v -> {
+            //Retrofit异步请求 结合rxjava
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(mUrlApi)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    //使用RXjava，只需要在此加入RxJavaCallAdapterFactory,
+                    // gradle里面要加入retrofit支持rajava的依赖'com.squareup.retrofit2:adapter-rxjava2:2.5.0'  ！！！ 注意不是adapter-rxjava:2.5.0'
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+
+            NewsService mService = retrofit.create(NewsService.class);
+            Observable<ResponseBody> observable = mService.getJokeList2(1, 3, "text");
+            observable.subscribeOn(Schedulers.io())//请求数据的事件发生在io子线程
+                    .observeOn(AndroidSchedulers.mainThread())//请求数据的事件发生在主线程，注意！！！，此处容易导包导错，要导rxandroid2.1的，不是1.3额
+                    .subscribe(new Observer<ResponseBody>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(ResponseBody responseBody) {
+                            try {
+                                String string = responseBody.string();
+                                mRetrofiRxjavaExecuteResult.setText("收到的结果是：" +
+                                        "\nresponseBody.string() = " + string);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        });
 
 
     }
@@ -173,8 +247,18 @@ public class NetWorkActivity extends AppCompatActivity {
     ArrayList<String> idList = new ArrayList<>(20);
     ArrayList<String> nameList = new ArrayList<>(20);
 
+
+    int code;
+    ResponseBody body;
+    String string;
+    String message;
+
     private void parseJsonWithJsonObject(Response response) throws IOException {
-        String responseData = response.body().string();
+        code = response.code();
+        body = response.body();
+        message = response.message();
+        string = response.body().string();
+        String responseData = string;
         try {
             JSONArray jsonArray = null;
             try {
@@ -188,11 +272,10 @@ public class NetWorkActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            for(int i=0;i<jsonArray.length();i++)
-            {
-                JSONObject jsonObject=jsonArray.getJSONObject(i);
-                String id=jsonObject.getString("sid");
-                String name=jsonObject.getString("text");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String id = jsonObject.getString("sid");
+                String name = jsonObject.getString("text");
                 idList.add(id);
                 nameList.add(name);
             }
