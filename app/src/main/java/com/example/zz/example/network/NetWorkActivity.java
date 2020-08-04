@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -202,6 +203,7 @@ public class NetWorkActivity extends AppCompatActivity {
             //Retrofit异步请求 结合rxjava
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(mUrlApi)
+                    //为了使Retrofit支持数据返回自动解析成实体，添加依赖：'com.squareup.retrofit2:converter-gson:2.5.0'
                     .addConverterFactory(GsonConverterFactory.create())
                     //使用RXjava，只需要在此加入RxJavaCallAdapterFactory,
                     // gradle里面要加入retrofit支持rajava的依赖'com.squareup.retrofit2:adapter-rxjava2:2.5.0'  ！！！ 注意不是adapter-rxjava:2.5.0'
@@ -211,7 +213,7 @@ public class NetWorkActivity extends AppCompatActivity {
             NewsService mService = retrofit.create(NewsService.class);
             Observable<ResponseBody> observable = mService.getJokeList2(1, 3, "text");
             observable.subscribeOn(Schedulers.io())//请求数据的事件发生在io子线程
-                    .observeOn(AndroidSchedulers.mainThread())//请求数据的事件发生在主线程，注意！！！，此处容易导包导错，要导rxandroid2.1的，不是1.3额
+                    .observeOn(AndroidSchedulers.mainThread())//请求数据的事件发生在主线程，注意！！！，此处容易导包导错，要导rxandroid2.1的，不是1.3的，因为别的包里面引入了1.3所以可能存在误导
                     .subscribe(new Observer<ResponseBody>() {
                         @Override
                         public void onSubscribe(Disposable d) {
