@@ -24,6 +24,7 @@ import com.example.zz.example.mediaplayer.ZzPlayerActivity;
 import com.example.zz.example.memorylink.MemoryLinkActivity;
 import com.example.zz.example.network.NetWorkActivity;
 import com.example.zz.example.pattern.PatternActivity;
+import com.example.zz.example.pattern.rxjava.RxjavaActivity;
 import com.example.zz.example.pictureload.PictureLoadActivity;
 
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.zz_player).setOnClickListener(this);
         findViewById(R.id.broadcast).setOnClickListener(this);
         findViewById(R.id.network).setOnClickListener(this);
+        findViewById(R.id.rxjava).setOnClickListener(this);
         if (Build.VERSION.SDK_INT >= 23) {//6.0才用动态权限
             initPermission();
         }
@@ -149,6 +151,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.network:
                 ActivityUtils.getInstance().goToActivity(MainActivity.this, NetWorkActivity.class);
+                break;
+            case R.id.rxjava:
+                ActivityUtils.getInstance().goToActivity(MainActivity.this, RxjavaActivity.class);
                 break;
             default:
                 return;

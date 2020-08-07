@@ -36,7 +36,13 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 
 /**
- * 参考文献：https://blog.csdn.net/u011082160/article/details/90773293
+ * 参考博客地址：https://blog.csdn.net/u011082160/article/details/90773293
+ * 原博客中联网地址不可用，使用另外的三房免费api进行测试，免费api联网地址：https://www.kancloud.cn/lizhixuan/free_api/1159536
+ * 如实时段子接口，GET请求地址为：https://api.apiopen.top/getJoke，
+ * 可以在网页中设置获取的段子信息，如设置第1页数据，获取3条，类型是text，就可以获取到结果，
+ * 也可以网页直接设置筛选后访问地址https://api.apiopen.top/getJoke?page=1&count=3&type=text
+ * 下面类中测试通过okhttp和retrofit进行联网和获取数据
+ *
  */
 
 public class NetWorkActivity extends AppCompatActivity {

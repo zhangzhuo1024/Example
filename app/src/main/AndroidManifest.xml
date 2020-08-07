@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".network.NetWorkActivity"></activity>
+        <activity android:name=".pattern.rxjava.RxjavaActivity"></activity>
+        <activity android:name=".network.NetWorkActivity" />
         <activity android:name=".broadcast.BroadcastActivity" />
         <activity android:name=".pictureload.PictureLoadActivity" />
         <activity android:name=".pattern.eventbus.EventBusActivity" />
