@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.zz.example.R;
 
@@ -53,7 +54,6 @@ public class NetWorkActivity extends AppCompatActivity {
     private TextView mRetrofiRxjavaExecuteResult;
     private Handler mHandler;
 
-    public static final String TYPE_GIRLS = "jandan.get_ooxx_comments";
 
 
     @Override
@@ -101,6 +101,12 @@ public class NetWorkActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     //运行在子线程
+                    mHandler.post(() -> {
+                        //通过handler发送到主线程更新ui
+
+                        Toast.makeText(NetWorkActivity.this, " mOkHttpEnqueue call = " + call + "  e = " + e, Toast.LENGTH_SHORT).show();
+
+                    });
                 }
 
                 @Override
@@ -177,6 +183,7 @@ public class NetWorkActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
                     //运行在主线程
+                    Toast.makeText(NetWorkActivity.this, " mRetrofitEnqueue call = " + call + "  t = " + t, Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -200,7 +207,7 @@ public class NetWorkActivity extends AppCompatActivity {
         });
 
         mRetrofitRxjavaExecute.setOnClickListener(v -> {
-            //Retrofit异步请求 结合rxjava
+            //Retrofit异步请求 结合rxjava 使用后接口返回类型不是Call，而是被观察者Obserable
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(mUrlApi)
                     //为了使Retrofit支持数据返回自动解析成实体，添加依赖：'com.squareup.retrofit2:converter-gson:2.5.0'
@@ -233,7 +240,7 @@ public class NetWorkActivity extends AppCompatActivity {
 
                         @Override
                         public void onError(Throwable e) {
-
+                            Toast.makeText(NetWorkActivity.this, " mOkHttpEnqueue  " + "  e = " + e, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
