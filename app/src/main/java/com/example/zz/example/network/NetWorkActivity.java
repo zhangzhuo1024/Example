@@ -226,7 +226,7 @@ public class NetWorkActivity extends AppCompatActivity {
             NewsService mService = retrofit.create(NewsService.class);
             Observable<ResponseBody> observable = mService.getJokeList2(1, 3, "text");
             observable.subscribeOn(Schedulers.io())//请求数据的事件发生在io子线程
-                    .observeOn(AndroidSchedulers.mainThread())//请求数据的事件发生在主线程，注意！！！，此处容易导包导错，要导rxandroid2.1的，不是1.3的，因为别的包里面引入了1.3所以可能存在误导
+                    .observeOn(AndroidSchedulers.mainThread())//请求完成后在主线程更新UI，注意！！！，此处容易导包导错，要导rxandroid2.1的，不是1.3的，因为别的包里面引入了1.3所以可能存在误导
                     .subscribe(new Observer<ResponseBody>() {
                         @Override
                         public void onSubscribe(Disposable d) {

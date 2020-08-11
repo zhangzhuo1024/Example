@@ -8,9 +8,16 @@
     tools:context=".pattern.rxjava.RxjavaActivity">
 
     <Button
-        android:id="@+id/subscribeOn"
+        android:id="@+id/observer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
         android:text="点击之后，通过Observable发送数字，在observer中接受并弹toast显示" />
+
+    <Button
+        android:id="@+id/subscriber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:text="点击之后，通过Observable发送字符串，subscriber中接受并弹toast显示" />
 </LinearLayout>
