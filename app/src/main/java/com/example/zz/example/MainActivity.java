@@ -1,7 +1,6 @@
 package com.example.zz.example;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -22,6 +21,7 @@ import com.example.zz.example.handler.HandlerActivity;
 import com.example.zz.example.mediaplayer.ServiceActivity;
 import com.example.zz.example.mediaplayer.ZzPlayerActivity;
 import com.example.zz.example.memorylink.MemoryLinkActivity;
+import com.example.zz.example.network.HomeActivity;
 import com.example.zz.example.network.NetWorkActivity;
 import com.example.zz.example.pattern.PatternActivity;
 import com.example.zz.example.pattern.rxjava.RxjavaActivity;

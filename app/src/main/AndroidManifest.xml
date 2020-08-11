@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".pattern.rxjava.RxjavaActivity"></activity>
+        <activity android:name=".network.NewsHtmlActivity"></activity>
+        <activity android:name=".pattern.rxjava.RxjavaActivity" />
         <activity android:name=".network.NetWorkActivity" />
         <activity android:name=".broadcast.BroadcastActivity" />
         <activity android:name=".pictureload.PictureLoadActivity" />
@@ -44,7 +45,7 @@
         <activity android:name=".clickevent.ClickEventActivity" />
         <activity android:name=".mediaplayer.ServiceActivity" />
         <activity android:name=".memorylink.MemoryLinkActivity" />
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".network.HomeActivity" />
         <activity android:name=".extractorvideo.MediaExtractorActivity" />
         <activity android:name=".clickspanner.WeiboContentTestActivity" />
         <activity android:name=".pattern.observer.ObserverActivity" />
