@@ -3,6 +3,7 @@ package com.example.zz.example.network;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -55,6 +56,34 @@ public class HomeActivity extends Activity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                int size = mNewsList.size();
+                Call<ResponseBody> wangYiNews = mNewsService.getWangYiNews(1, size);
+                wangYiNews.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        //运行在主线程
+                        int code = response.code();
+                        ResponseBody body = response.body();
+                        try {
+                            String string = body.string();
+                            ArrayList<WangYiNews> tempList = parseJsonWithJsonObject(string);
+                            diffArraylist(tempList);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        refreshlayout.finishLoadMore(false);
+                    }
+                });
+                refreshlayout.finishLoadMore(true);
+
+
+
+
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
         });
@@ -71,7 +100,9 @@ public class HomeActivity extends Activity {
                         ResponseBody body = response.body();
                         try {
                             String string = body.string();
-                            parseJsonWithJsonObject(string);
+                            ArrayList<WangYiNews> tempList = parseJsonWithJsonObject(string);
+                            mNewsList.clear();
+                            mNewsList.addAll(tempList);
                             myRecyclerViewAdapter.updateData(mNewsList);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -90,6 +121,33 @@ public class HomeActivity extends Activity {
         });
     }
 
+    private void diffArraylist(ArrayList<WangYiNews> tempList) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return mNewsList.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return tempList.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldItemPosition == newItemPosition;
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                WangYiNews wangYiNews1 = mNewsList.get(oldItemPosition);
+                WangYiNews wangYiNews2 = tempList.get(newItemPosition);
+                return wangYiNews1.equals(wangYiNews2);
+            }
+        }, true);
+        diffResult.dispatchUpdatesTo(myRecyclerViewAdapter);
+    }
+
     private void initData() {
         Retrofit.Builder builder = new Retrofit.Builder();
         Retrofit retrofit = builder.baseUrl("https://api.apiopen.top/")
@@ -106,7 +164,9 @@ public class HomeActivity extends Activity {
                 ResponseBody body = response.body();
                 try {
                     String string = body.string();
-                    parseJsonWithJsonObject(string);
+                    ArrayList<WangYiNews> tempList = parseJsonWithJsonObject(string);
+                    mNewsList.clear();
+                    mNewsList.addAll(tempList);
                     myRecyclerViewAdapter.updateData(mNewsList);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -121,8 +181,9 @@ public class HomeActivity extends Activity {
 
     }
 
-    private void parseJsonWithJsonObject(String string) throws IOException {
+    private ArrayList<WangYiNews> parseJsonWithJsonObject(String string) throws IOException {
         String responseData = string;
+        ArrayList<WangYiNews> tempList = new ArrayList<>();
         try {
             JSONArray jsonArray = null;
             try {
@@ -135,7 +196,7 @@ public class HomeActivity extends Activity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            ArrayList<WangYiNews> tempList = new ArrayList<>();
+
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String path = jsonObject.getString("path");
@@ -145,10 +206,10 @@ public class HomeActivity extends Activity {
                 WangYiNews wangYiNews = new WangYiNews(path, image, title, passtime);
                 tempList.add(wangYiNews);
             }
-            mNewsList.clear();
-            mNewsList.addAll(tempList);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return tempList;
     }
 }

@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.zz.example.DatabaseActivity;
-import com.example.zz.example.MainActivity;
 import com.example.zz.example.R;
 import com.example.zz.example.network.bean.WangYiNews;
 import com.squareup.picasso.Picasso;
