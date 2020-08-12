@@ -32,6 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeActivity extends Activity {
 
+    private int mPage = 1;
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
     ArrayList<WangYiNews> mNewsList = new ArrayList<>();
     private NewsService mNewsService;
@@ -56,42 +57,9 @@ public class HomeActivity extends Activity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                int size = mNewsList.size();
-                Call<ResponseBody> wangYiNews = mNewsService.getWangYiNews(1, size);
-                wangYiNews.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        //运行在主线程
-                        int code = response.code();
-                        ResponseBody body = response.body();
-                        try {
-                            String string = body.string();
-                            ArrayList<WangYiNews> tempList = parseJsonWithJsonObject(string);
-                            diffArraylist(tempList);
+                mPage = mPage + 1;
+                Call<ResponseBody> wangYiNews = mNewsService.getWangYiNews(mPage, 10);
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        refreshlayout.finishLoadMore(false);
-                    }
-                });
-                refreshlayout.finishLoadMore(true);
-
-
-
-
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
-            }
-        });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                int size = mNewsList.size();
-                Call<ResponseBody> wangYiNews = mNewsService.getWangYiNews(1, size + 10);
                 wangYiNews.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -102,6 +70,37 @@ public class HomeActivity extends Activity {
                             String string = body.string();
                             ArrayList<WangYiNews> tempList = parseJsonWithJsonObject(string);
                             mNewsList.clear();
+                            mNewsList.addAll(tempList);
+                            myRecyclerViewAdapter.updateData(mNewsList);
+                            refreshlayout.finishLoadMore(true);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        refreshlayout.finishLoadMore(false);
+                    }
+                });
+
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                int size = mNewsList.size();
+                Call<ResponseBody> wangYiNews = mNewsService.getWangYiNews(mPage, size + 10);
+                wangYiNews.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        //运行在主线程
+                        int code = response.code();
+                        ResponseBody body = response.body();
+                        try {
+                            String string = body.string();
+                            ArrayList<WangYiNews> tempList = parseJsonWithJsonObject(string);
                             mNewsList.addAll(tempList);
                             myRecyclerViewAdapter.updateData(mNewsList);
                         } catch (IOException e) {
@@ -119,33 +118,6 @@ public class HomeActivity extends Activity {
                 //refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }
         });
-    }
-
-    private void diffArraylist(ArrayList<WangYiNews> tempList) {
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
-            @Override
-            public int getOldListSize() {
-                return mNewsList.size();
-            }
-
-            @Override
-            public int getNewListSize() {
-                return tempList.size();
-            }
-
-            @Override
-            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                return oldItemPosition == newItemPosition;
-            }
-
-            @Override
-            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                WangYiNews wangYiNews1 = mNewsList.get(oldItemPosition);
-                WangYiNews wangYiNews2 = tempList.get(newItemPosition);
-                return wangYiNews1.equals(wangYiNews2);
-            }
-        }, true);
-        diffResult.dispatchUpdatesTo(myRecyclerViewAdapter);
     }
 
     private void initData() {
