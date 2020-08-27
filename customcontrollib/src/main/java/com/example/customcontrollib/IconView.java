@@ -1,4 +1,4 @@
-package com.example.zz.example.customcontrol;
+package com.example.customcontrollib;
 
 import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
@@ -10,11 +10,9 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.PathInterpolator;
-
-import com.example.zz.example.LogUtils;
-import com.example.zz.example.R;
 
 /**
  * Created by zhangzhuo.
@@ -23,7 +21,7 @@ import com.example.zz.example.R;
  */
 public class IconView extends View {
 
-    private static final int ICON_MIN_WIDTH  = 20;
+    private static final int ICON_MIN_WIDTH = 20;
     private float mCycleWidth;
     private float mCycleTroke;
     private float mHalfCycleTroke;
@@ -98,8 +96,6 @@ public class IconView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        LogUtils.e("onSizeChanged  oldw = " + oldw + " oldh = " + oldh);
-        LogUtils.e("onSizeChanged  w = " + w + " h = " + h);
         this.mLayoutWidth = w;
         this.mLayoutHeight = h;
         mCycleRect.left = (mLayoutWidth - mCycleCentreWidth) / 2;
@@ -133,7 +129,6 @@ public class IconView extends View {
         this.mLayoutWidth = layoutWidth;
         this.mLayoutHeight = layoutHeight;
         setMeasuredDimension(layoutWidth, layoutHeight);
-        LogUtils.e("onSizeChanged  layoutWidth = " + layoutWidth + " layoutHeight = " + layoutHeight);
     }
 
     private int measureWidthAndHeight(int measureSpec, int type) {
@@ -155,14 +150,14 @@ public class IconView extends View {
                     return size;
                 }
             case MeasureSpec.UNSPECIFIED:
-                LogUtils.e("未指定自定义控件高度");
+                Log.e("IconView", "未指定自定义控件高度");
                 break;
         }
-        LogUtils.e("onMeasure error");
+        Log.e("IconView", "onMeasure error");
         return 0;
     }
 
-    public void startToMove(){
+    public void startToMove() {
         TransAnimator redPointValue = new TransAnimator(mRedPointWidth, mRedPointWidth / 2, 0f);
         TransAnimator redSquareValue = new TransAnimator(mRedSquareWidth, mRedSquareRadius, mMoveDistance);
         ValueAnimator valueAnimator = ObjectAnimator.ofObject(new TransTypeEvaluator(), redPointValue, redSquareValue);
@@ -182,7 +177,7 @@ public class IconView extends View {
         mCyclePaint.setColor(mCycleColor);
         ValueAnimator cycleAlphaAnimator = ObjectAnimator.ofFloat(1.0f, 0);
         cycleAlphaAnimator.setDuration(1800);
-        cycleAlphaAnimator.setInterpolator(new PathInterpolator(0.33f, 0, 0.67f,1));
+        cycleAlphaAnimator.setInterpolator(new PathInterpolator(0.33f, 0, 0.67f, 1));
         final int cycleAlpha = mCyclePaint.getAlpha();
         cycleAlphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -195,11 +190,11 @@ public class IconView extends View {
         cycleAlphaAnimator.start();
     }
 
-    public void ringChangeToRect(boolean isRingToRect){
+    public void ringChangeToRect(boolean isRingToRect) {
         TransAnimator redPointValue = new TransAnimator(mRedPointWidth, mRedPointWidth / 2, 0f);
         TransAnimator redSquareValue = new TransAnimator(mRedSquareWidth, mRedSquareRadius, 0f);
         ValueAnimator valueAnimator;
-        if(isRingToRect){
+        if (isRingToRect) {
             valueAnimator = ObjectAnimator.ofObject(new TransTypeEvaluator(), redPointValue, redSquareValue);
         } else {
             valueAnimator = ObjectAnimator.ofObject(new TransTypeEvaluator(), redSquareValue, redPointValue);
@@ -219,11 +214,12 @@ public class IconView extends View {
         valueAnimator.start();
     }
 
-    private class TransAnimator{
+    private class TransAnimator {
         float width;
         float radius;
         float offset;
-        TransAnimator(float width, float radius, float offset){
+
+        TransAnimator(float width, float radius, float offset) {
             this.width = width;
             this.radius = radius;
             this.offset = offset;
@@ -231,7 +227,7 @@ public class IconView extends View {
     }
 
     private class TransTypeEvaluator implements TypeEvaluator<TransAnimator> {
-        TransAnimator transAnimator = new TransAnimator(0f,0f, 0f);
+        TransAnimator transAnimator = new TransAnimator(0f, 0f, 0f);
 
         @Override
         public TransAnimator evaluate(float fraction, TransAnimator startValue, TransAnimator endValue) {

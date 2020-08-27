@@ -3,15 +3,15 @@ package com.example.zz.example.customcontrol;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
-import android.graphics.Rect;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.customcontrollib.IconView;
 import com.example.zz.example.LogUtils;
 import com.example.zz.example.R;
 
