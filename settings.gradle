@@ -1,2 +1,3 @@
 include ':javaKotlinlib'
 include ':app', ':kotlin', ':zzplayer', ':opscreenrecorder', ':remoteservice'
+include ':customcontrollib'
