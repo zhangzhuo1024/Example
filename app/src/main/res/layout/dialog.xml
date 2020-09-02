@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/linearlayout"
-        android:text="hahahhahah"
+        android:text="这是一个悬浮窗"
         android:textSize="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

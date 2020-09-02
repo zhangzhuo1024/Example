@@ -22,6 +22,7 @@ public class CustomControlActivity extends AppCompatActivity {
         LogUtils.i("onCreate");
         setContentView(R.layout.activity_custom_control);
         IconView iconView = findViewById(R.id.start_icon_view);
+
         iconView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,8 +49,11 @@ public class CustomControlActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 iconView.ringChangeToRect(true);
-                addView();
             }
+        });
+
+        findViewById(R.id.add_view).setOnClickListener(view -> {
+            addView();
         });
 
     }
@@ -66,6 +70,8 @@ public class CustomControlActivity extends AppCompatActivity {
         layoutParams.format = PixelFormat.TRANSLUCENT;                               //不设置这个弹出框的透明遮罩显示为黑色
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;                //窗口的宽
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;               //窗口的高
+        layoutParams.x = 300;
+        layoutParams.y = 1000;
 //        layoutParams.token = ((View)findViewById(R.id.ring_to_rect)).getWindowToken();           //获取当前Activity中的View中的TOken,来依附Activity，因为设置了该值，纳闷写的这些代码不能出现在onCreate();否则会报错。
         windowManager.addView(view,layoutParams);                                   //显示窗口
     }
