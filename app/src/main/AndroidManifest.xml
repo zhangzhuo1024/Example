@@ -57,6 +57,8 @@
             android:name=".mediaplayer.zzplayer.PlayActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.FullScreen" />
+        <activity android:name=".customcontrol.RingRectActivity" />
+        <activity android:name=".customcontrol.newedittext.NewEditTextActivity" />
 
         <service
             android:name=".mediaplayer.AudioPlayerService"
