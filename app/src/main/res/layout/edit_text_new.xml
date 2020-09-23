@@ -3,28 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/container"
     android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="普通edittext" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="right"
-            android:hint="普通edittext"
-            android:singleLine="true" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,12 +13,15 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
+
         <TextView
+            android:id="@+id/edit_title"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="自定义edittext失去焦点后，超长会显示省略号" />
 
         <com.example.zz.example.customcontrol.newedittext.EndEllipsisEditText
+            android:id="@+id/endEllipsisEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -46,6 +29,17 @@
             android:singleLine="true"
             android:gravity="right"
             android:hint="自定义edittext" />
+
     </LinearLayout>
+
+
+    <View
+        android:id="@+id/touch_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+
 
 </LinearLayout>
