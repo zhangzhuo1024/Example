@@ -2,6 +2,7 @@ package com.example.zz.example.customcontrol.newedittext;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.Editable;
@@ -11,6 +12,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
+
+import com.example.zz.example.R;
 
 /**
  * Created by zz
@@ -23,23 +26,29 @@ public class EndEllipsisEditText extends EditText implements View.OnFocusChangeL
     private String mStartString;
     private boolean mIsFirstSet = true;
     private boolean mIsFocusChangeText = false;
+    private boolean mIsTextRight = false;
 
     public EndEllipsisEditText(Context context) {
         super(context);
-        init();
+        init(null);
     }
 
     public EndEllipsisEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(attrs);
     }
 
     public EndEllipsisEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(attrs);
     }
 
-    public void init() {
+    public void init(AttributeSet attrs) {
+        if (attrs != null) {
+            TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.EllipsisEdit);
+            mIsTextRight = typedArray.getBoolean(com.example.customcontrollib.R.styleable.EllipsisEdit_text_right_gravity, false);
+            typedArray.recycle();
+        }
         this.setOnFocusChangeListener(this);
         this.addTextChangedListener(this);
     }
@@ -58,7 +67,6 @@ public class EndEllipsisEditText extends EditText implements View.OnFocusChangeL
         }
     }
 
-
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         mStartString = s.toString();
@@ -71,10 +79,16 @@ public class EndEllipsisEditText extends EditText implements View.OnFocusChangeL
 
     @Override
     public void afterTextChanged(Editable s) {
+        if (mIsTextRight) {
+            updateGravityAndSelection(s);
+        }
+    }
+
+    private void updateGravityAndSelection(Editable s) {
         String endString = s.toString();
         int newStringLength = getCharacterWidth(endString, getTextSize());
         int oldStringLength = getCharacterWidth(mStartString, getTextSize());
-        int usefulWidth = getWidth() - getCharacterWidth("  ", getTextSize());
+        int usefulWidth = getWidth() - getCharacterWidth("AAA", getTextSize());
         if (mIsFocusChangeText) {
             mIsFocusChangeText = false;
         } else {
@@ -101,17 +115,30 @@ public class EndEllipsisEditText extends EditText implements View.OnFocusChangeL
         }
         Paint paint = new Paint();
         paint.setTextSize(size);
-        int text_width = (int) paint.measureText(text);// 得到总体长度
+        int text_width = (int) paint.measureText(text);
         return text_width;
-    }
-
-    public String getRealString() {
-        return mRealStr;
     }
 
     private void setTheEditText(boolean hasFocus) {
         mFakeStr = getText() != null ? getText().toString() : "";
         if (hasFocus) {
+            setGravityAndSelection();
+            setText(mRealStr);
+        } else {
+            mRealStr = getText() != null ? getText().toString() : "";
+            if (getCharacterWidth(mRealStr, getTextSize()) > getWidth()) {
+                mFakeStr = getEllipsisStr(mRealStr);
+            } else {
+                mFakeStr = mRealStr;
+            }
+            setGravityAndSelection();
+            setText(mFakeStr);
+        }
+        mIsFocusChangeText = true;
+    }
+
+    private void setGravityAndSelection() {
+        if (mIsTextRight) {
             int selectionStart = getSelectionStart();
             int selectionEnd = getSelectionEnd();
             if (getCharacterWidth(mRealStr, getTextSize()) > getWidth()) {
@@ -120,21 +147,8 @@ public class EndEllipsisEditText extends EditText implements View.OnFocusChangeL
                 setGravity(Gravity.CENTER_VERTICAL | Gravity.END);
             }
             setSelection(selectionStart, selectionEnd);
-            setText(mRealStr);
-        } else {
-            mRealStr = getText() != null ? getText().toString() : "";
-            if (getCharacterWidth(mRealStr, getTextSize()) > getWidth()) {
-                mFakeStr = getEllipsisStr(mRealStr);
-                setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
-            } else {
-                mFakeStr = mRealStr;
-                setGravity(Gravity.CENTER_VERTICAL | Gravity.END);
-            }
-            setText(mFakeStr);
         }
-        mIsFocusChangeText = true;
     }
-
 
     private String getEllipsisStr(String text) {
         String total = "";
@@ -148,6 +162,13 @@ public class EndEllipsisEditText extends EditText implements View.OnFocusChangeL
         return total;
     }
 
+    public void setTextRightDisplay(boolean isTextRight) {
+        this.mIsTextRight = isTextRight;
+    }
+
+    public String getRealString() {
+        return mRealStr;
+    }
     public void setListener(Activity activity, OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener) {
         setOnSoftKeyBoardChangeListener(onSoftKeyBoardChangeListener);
         SoftKeyBoardListener(activity);
