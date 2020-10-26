@@ -25,11 +25,11 @@
         <activity android:name=".pattern.PatternActivity" />
         <activity android:name=".customcontrol.CustomControlActivity" />
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".DatabaseActivity">
             <intent-filter>
@@ -59,11 +59,25 @@
             android:theme="@style/AppTheme.FullScreen" />
         <activity android:name=".customcontrol.RingRectActivity" />
         <activity android:name=".customcontrol.newedittext.NewEditTextActivity" />
+        <activity android:name=".MasterActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".mediaplayer.AudioPlayerService"
             android:enabled="true"
             android:exported="true" />
+
+        <service
+            android:name=".service.MyPushService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
