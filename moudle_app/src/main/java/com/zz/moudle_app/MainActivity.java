@@ -1,25 +1,20 @@
-package com.example.zz.example;
+package com.zz.moudle_app;
 
 import android.Manifest;
 import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
-import com.example.zz.example.fragment.HomeFragment;
-import com.example.zz.example.fragment.MoreFragment;
-import com.example.zz.example.fragment.OrderFragment;
-import com.example.zz.example.fragment.UserFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MasterActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private LinearLayout mMainBottomBar;
     private ArrayList<Fragment> mFragmentList = new ArrayList<Fragment>();
@@ -27,7 +22,7 @@ public class MasterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_master);
+        setContentView(R.layout.activity_main);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("加油，我的世界 ！");
@@ -37,10 +32,13 @@ public class MasterActivity extends AppCompatActivity {
             initPermission();
         }
 
-        mFragmentList.add(new HomeFragment());
-        mFragmentList.add(new OrderFragment());
-        mFragmentList.add(new UserFragment());
-        mFragmentList.add(new MoreFragment());
+        mFragmentList.add(new Fragment());
+        mFragmentList.add(new Fragment());
+        mFragmentList.add(new Fragment());
+        mFragmentList.add(new Fragment());
+//        mFragmentList.add(new OrderFragment());
+//        mFragmentList.add(new UserFragment());
+//        mFragmentList.add(new MoreFragment());
 
         initBottom();
     }
@@ -58,9 +56,9 @@ public class MasterActivity extends AppCompatActivity {
     private void changeIndex(int index) {
         for (int i = 0; i < mMainBottomBar.getChildCount(); i++) {
             if (index == i) {
-                setChildEnable(true, (FrameLayout) mMainBottomBar.getChildAt(i));
-            } else {
                 setChildEnable(false, (FrameLayout) mMainBottomBar.getChildAt(i));
+            } else {
+                setChildEnable(true, (FrameLayout) mMainBottomBar.getChildAt(i));
             }
             getFragmentManager().beginTransaction().replace(R.id.main_content, mFragmentList.get(i));
         }
@@ -92,5 +90,4 @@ public class MasterActivity extends AppCompatActivity {
             //说明权限都已经通过，可以做你想做的事情去
         }
     }
-
 }

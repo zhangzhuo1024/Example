@@ -3,9 +3,8 @@ package com.example.zz.example.fragment;
 import android.app.Fragment;
 
 /**
- * @author: zhuozhang6
+ * @author: zhuozhang
  * @date: 2020/10/26
- * @email: zhuozhang6@iflytek.com
  */
 public class MoreFragment extends Fragment {
 }
