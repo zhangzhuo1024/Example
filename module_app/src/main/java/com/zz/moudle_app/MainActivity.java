@@ -36,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
         mFragmentList.add(new Fragment());
         mFragmentList.add(new Fragment());
         mFragmentList.add(new Fragment());
-//        mFragmentList.add(new OrderFragment());
-//        mFragmentList.add(new UserFragment());
-//        mFragmentList.add(new MoreFragment());
 
         initBottom();
     }

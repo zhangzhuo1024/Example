@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".network.NewsHtmlActivity"></activity>
+        <activity android:name=".memory.MemoryActivity"></activity>
+        <activity android:name=".network.NewsHtmlActivity" />
         <activity android:name=".pattern.rxjava.RxjavaActivity" />
         <activity android:name=".network.NetWorkActivity" />
         <activity android:name=".broadcast.BroadcastActivity" />
@@ -25,11 +26,11 @@
         <activity android:name=".pattern.PatternActivity" />
         <activity android:name=".customcontrol.CustomControlActivity" />
         <activity android:name=".MainActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".DatabaseActivity">
             <intent-filter>
@@ -64,7 +65,6 @@
             android:name=".mediaplayer.AudioPlayerService"
             android:enabled="true"
             android:exported="true" />
-
     </application>
 
 </manifest>

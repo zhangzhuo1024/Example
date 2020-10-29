@@ -20,6 +20,7 @@ import com.example.zz.example.game.PlaneMainActivity;
 import com.example.zz.example.handler.HandlerActivity;
 import com.example.zz.example.mediaplayer.ServiceActivity;
 import com.example.zz.example.mediaplayer.ZzPlayerActivity;
+import com.example.zz.example.memory.MemoryActivity;
 import com.example.zz.example.memorylink.MemoryLinkActivity;
 import com.example.zz.example.network.HomeActivity;
 import com.example.zz.example.network.NetWorkActivity;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             actionBar.setTitle("加油，我的世界 ！");
         }
         ButterKnife.bind(this);
+        findViewById(R.id.memory).setOnClickListener(this);
         findViewById(R.id.database).setOnClickListener(this);
         findViewById(R.id.game).setOnClickListener(this);
         findViewById(R.id.click_event).setOnClickListener(this);
@@ -102,6 +104,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         LogUtils.e("onClick ");
         switch (v.getId()) {
+            case R.id.memory:
+                ActivityUtils.getInstance().goToActivity(MainActivity.this, MemoryActivity.class);
+                break;
             case R.id.database:
                 Intent intent = new Intent(MainActivity.this, DatabaseActivity.class);
                 startActivity(intent);
