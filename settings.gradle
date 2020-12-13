@@ -1,3 +1,4 @@
+include ':appbarlayout'
 include ':module_common'
 include ':module_order'
 include ':module_more'
