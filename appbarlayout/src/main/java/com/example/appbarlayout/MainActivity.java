@@ -1,9 +1,11 @@
 package com.example.appbarlayout;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -67,7 +69,28 @@ public class MainActivity extends AppCompatActivity {
                 return bodyFragments.get(position).getmTitle();
             }
         };
-        viewPager.setAdapter(mAdapter);
+
+        FragmentStatePagerAdapter statePagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()){
+
+            @Override
+            public int getCount() {
+                return bodyFragments.size();
+            }
+
+            @Override
+            public Fragment getItem(int position) {
+                return bodyFragments.get(position);
+            }
+
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return bodyFragments.get(position).getmTitle();
+            }
+        };
+
+
+        viewPager.setAdapter(statePagerAdapter);
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);//将TabLayout和ViewPager关联起来。
 
