@@ -4,6 +4,7 @@ package com.example.appbarlayout;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -91,6 +92,12 @@ public class MyFragment extends Fragment {
         mData.add("111111111111111111111");
         mData.add("111111111111111111111");
         mData.add("111111111111111111111");
+        new GridLayoutManager(getContext(), 3){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerAdapter=new RecyclerAdapter(getActivity(),mData);
         recyclerView.setAdapter(recyclerAdapter);
