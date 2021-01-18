@@ -5,11 +5,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zz.example.R;
+import com.example.zz.example.network.bean.JsonBean;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +20,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -42,7 +46,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  * 可以在网页中设置获取的段子信息，如设置第1页数据，获取3条，类型是text，就可以获取到结果，
  * 也可以网页直接设置筛选后访问地址https://api.apiopen.top/getJoke?page=1&count=3&type=text
  * 下面类中测试通过okhttp和retrofit进行联网和获取数据
- *
  */
 
 public class NetWorkActivity extends AppCompatActivity {
@@ -59,7 +62,6 @@ public class NetWorkActivity extends AppCompatActivity {
     private Button mRetrofitRxjavaExecute;
     private TextView mRetrofiRxjavaExecuteResult;
     private Handler mHandler;
-
 
 
     @Override
@@ -257,6 +259,7 @@ public class NetWorkActivity extends AppCompatActivity {
         });
 
 
+        easyJsonString();
     }
 
     ArrayList<String> idList = new ArrayList<>(20);
@@ -298,4 +301,91 @@ public class NetWorkActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    /**
+     * json字符串转化有自带的org.Json、谷歌出品的Gson、FastJson、Jackson、Json-Lib等方式
+     * 这里只对org.Json和Gson的使用做说明
+     */
+
+    private void easyJsonString() {
+        try {
+            //JSONObject构造1
+            JSONObject obj = new JSONObject();
+            System.out.println(obj.toString());//输出空对象: {}
+            obj.put("key1", 1);
+            obj.put("key2", 2);
+            System.out.println(obj.toString());//输出: {"key2":2,"key1":1}
+
+            //JSONObject构造2，参数传入json格式的字符串
+            JSONObject obj2 = new JSONObject(obj.toString());
+            System.out.println(obj2.toString());
+
+            //构造1进行嵌套
+            JSONObject obj3 = new JSONObject();
+            System.out.println(obj3.toString());//输出空对象: {}
+            obj3.put("key3", 3);
+            obj3.put("key4", obj);
+            System.out.println(obj3.toString());//输出: {"key3":3,"key4":{"key1":1,"key2":2}}
+
+
+            //JSONObject属性遍历
+            Iterator<String> it = obj2.keys();
+            while (it.hasNext()) {
+                String key = it.next();
+                System.out.println(key + "=" + (int) obj2.get(key));
+            }
+
+            //获取JSONObject对象某个属性的值
+            String key = "key1";
+            if (obj.has(key)) {
+                System.out.println(obj.get(key));
+            }
+
+
+            //JSONArray 是用来存储JSONObject的数组
+            //JSONArray构造1
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(obj);
+            jsonArray.put(obj2);
+            System.out.println(jsonArray.toString());
+
+            //JSONArray构造2，传入json数组格式的字符串
+            String jsonArrStr = "[{\"1000\":2,\"100\":111},{\"1000\":2,\"100\":222}]";
+            JSONArray array = new JSONArray(jsonArrStr);
+            System.out.println(array.toString());
+
+            //JSONArray遍历
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObj = array.getJSONObject(i);
+                System.out.println(jsonObj.toString());
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void orgJson2Bean() {
+        //直接粘贴的json字符串
+        String jsonstr = "{“id”:“66”,“name”:“helloword”,“age”:“18”}";
+        //手动输入的json字符串，输入不了上面的引号的，需要加转义字符
+        String orgJson = "{\"name\":\"张三\",\"age\":\"18\"}";
+        try {
+            JSONObject jsonObject = new JSONObject(orgJson);
+            JsonBean jsonBean = new JsonBean();
+            jsonBean.setName(jsonObject.getString("name"));//getString没有值时会抛异常
+            jsonBean.setAge(jsonObject.optInt("age"));//optxxx这种方式没有值时，返回空
+            Log.e("NetWorkActivity", "orgJson2Bean  name = " + jsonBean.getName());
+            Log.e("NetWorkActivity", "orgJson2Bean  name = " + jsonBean.getName());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void bean2OrgJson() {
+        JsonBean jsonBean = new JsonBean("张三", 18);
+
+
+    }
+
 }
