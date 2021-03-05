@@ -15,6 +15,7 @@ import com.example.zz.example.network.bean.WangYiNews;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyHolder> {
 
@@ -39,9 +40,30 @@ class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.M
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-
-        holder.setData(mNewsList.get(position));
+        holder.setData(mNewsList.get(position), position);
     }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyHolder holder, int position, @NonNull List<Object> payloads) {
+        super.onBindViewHolder(holder, position, payloads);
+
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position);
+        } else {
+            holder.setSpecialData(payloads.get(0).toString());
+        }
+
+    }
+//
+//    @Override
+//    public void onBindViewHolder(@NonNull MyHolder holder, int position, @NonNull List<String> payloads) {
+
+//        if (payloads.isEmpty()) {
+//            onBindViewHolder(holder, position);
+//        } else {
+//            holder.setSpecialData(payloads.get(0));
+//        }
+//    }
 
     @Override
     public int getItemCount() {
@@ -55,6 +77,7 @@ class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.M
         private ImageView imageTitle;
         private TextView passtimeTitle;
         private WangYiNews mWangYiNews;
+        private int mPosition;
 
 
         public MyHolder(View itemView) {
@@ -63,6 +86,10 @@ class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.M
             recyclerTitle = itemView.findViewById(R.id.title_recycler);
             imageTitle = itemView.findViewById(R.id.image_recycler);
             passtimeTitle = itemView.findViewById(R.id.passtime_recycler);
+
+            recyclerTitle.setOnClickListener(vew ->{
+                notifyItemChanged(mPosition, "这是只刷新一个控件");
+            });
 
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(mContext, NewsHtmlActivity.class);
@@ -81,14 +108,19 @@ class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.M
             });
         }
 
-        public void setData(WangYiNews wangYiNews) {
+        public void setData(WangYiNews wangYiNews, int position) {
             this.mWangYiNews = wangYiNews;
+            this.mPosition = position;
             recyclerTitle.setText(wangYiNews.getTitle());
             passtimeTitle.setText(wangYiNews.getPasstime());
             String path = wangYiNews.getImage();
             if (path != null && path.trim().length() != 0) {
                 Picasso.with(mContext).load(wangYiNews.getImage()).into(imageTitle);
             }
+        }
+
+        public void setSpecialData(String title) {
+            recyclerTitle.setText(title);
         }
     }
 }
