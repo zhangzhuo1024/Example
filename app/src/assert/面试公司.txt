@@ -115,6 +115,7 @@ the kernel configuration is kept in the file named .config in the top directiona
 jni c / c ++  了解太少，音视频框架了解不过关
 
 
+
 芯知
 handler原理
 事件分发原理
