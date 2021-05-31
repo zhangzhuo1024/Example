@@ -5,6 +5,33 @@ buildscript {
 
 
     repositories {
+
+//        阿里云提供的多个仓库的代理，能够加快国内用户项目的构建速度。https://maven.aliyun.com/mvn/view
+
+//        central:
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/central/' }
+//        maven:
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+//        gradle - plugin :
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/gradle-plugin/' }
+//        apache:
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/apache-snapshots/' }
+//        google:
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google/' }
+//        jcenter:
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter/' }
+//        spring:
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/spring' }
+//        spring - plugin :
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/spring-plugin' }
+//        grails - core :
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/grails-core' }
+//        apache snapshots:
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/apache-snapshots' }
+//        HongKong Nexus :
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/hongkong-nexu' }
+
+
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
 //        jcenter()
@@ -41,4 +68,8 @@ ext {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    isDependenciesMaven = "false"
 }
