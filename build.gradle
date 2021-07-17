@@ -8,6 +8,14 @@ buildscript {
 
 //        阿里云提供的多个仓库的代理，能够加快国内用户项目的构建速度。https://maven.aliyun.com/mvn/view
 
+        //常用
+
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+
+
 //        central:
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/central/' }
 //        maven:
