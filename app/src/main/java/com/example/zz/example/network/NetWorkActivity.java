@@ -29,8 +29,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Callback;
@@ -62,6 +64,8 @@ public class NetWorkActivity extends AppCompatActivity {
     private Button mRetrofitRxjavaExecute;
     private TextView mRetrofiRxjavaExecuteResult;
     private Handler mHandler;
+    private Button mOkHttpEnqueuePost;
+    private TextView mOkHttpEnqueueResultPost;
 
 
     @Override
@@ -95,6 +99,10 @@ public class NetWorkActivity extends AppCompatActivity {
         mRetrofitRxjavaExecute = findViewById(R.id.retrofit_and_rxjava_execute);
         mRetrofiRxjavaExecuteResult = findViewById(R.id.retrofit_and_rxjava_execute_result);
         mRetrofiRxjavaExecuteResult.setMovementMethod(new ScrollingMovementMethod());
+
+        mOkHttpEnqueuePost = findViewById(R.id.okhttp_enqueue_post);
+        mOkHttpEnqueueResultPost = findViewById(R.id.okhttp_enqueue_post_result);
+        mOkHttpEnqueueResultPost.setMovementMethod(new ScrollingMovementMethod());
 
         mOkHttpEnqueue.setOnClickListener(v -> {
 
@@ -258,8 +266,62 @@ public class NetWorkActivity extends AppCompatActivity {
                     });
         });
 
+        mOkHttpEnqueuePost.setOnClickListener(v -> {
+            okHttpPost();
+
+        });
 
         easyJsonString();
+
+    }
+
+
+    /**
+     * 测试okhttp的post方法
+     */
+    private void okHttpPost() {
+        String url = "http://api.k780.com/?app=weather.history";//
+        // &weaid=1&date=2018-08-13&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4&format=json";
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody body = new FormBody.Builder()
+                .add("weaid", "1")
+                .add("date", "2018-08-13")
+                .add("appkey", "10003")
+                .add("sign", "b59bc3ef6191eb9f747dd4e83c99f2a4")
+                .add("format", "json")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                int code = response.code();
+                ResponseBody body = response.body();
+                try {
+                    String string = body.string();
+                    //发送到主线程更新text
+//                        mOkHttpEnqueueResultPost.setText("收到的结果是：" +
+//                                "\nresponse.code() = " + code +
+//                                "\nresponse.body().string() = " + string);
+                    Log.e("eeeeee", "收到的结果是：" +
+                            "\nresponse.code() = " + code +
+                            "\nresponse.body().string() = " + string);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     ArrayList<String> idList = new ArrayList<>(20);

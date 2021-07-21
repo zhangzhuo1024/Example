@@ -7,109 +7,149 @@
     android:orientation="vertical"
     tools:context=".network.NetWorkActivity">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/okhttp_enqueue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:text="okhttp异步请求" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/okhttp_enqueue_result"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_margin="6dp"
-            android:scrollbars="vertical"
-            android:text="结果" />
-    </LinearLayout>
+            <TextView
+                android:text="get请求："
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/okhttp_execute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:text="okhttp同步请求" />
+                <Button
+                    android:id="@+id/okhttp_enqueue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="okhttp异步请求" />
 
-        <TextView
-            android:id="@+id/okhttp_execute_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:text="结果" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/okhttp_enqueue_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_margin="6dp"
+                    android:scrollbars="vertical"
+                    android:text="结果" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/retrofit_enqueue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:text="retrofit异步请求" />
+                <Button
+                    android:id="@+id/okhttp_execute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="okhttp同步请求" />
 
-        <TextView
-            android:id="@+id/retrofit_enqueue_result"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_margin="6dp"
-            android:scrollbars="vertical"
-            android:text="结果" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/okhttp_execute_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="结果" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/retrofit_execute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:text="retrofit同步请求" />
+                <Button
+                    android:id="@+id/retrofit_enqueue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="retrofit异步请求" />
 
-        <TextView
-            android:id="@+id/retrofit_execute_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:text="结果" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/retrofit_enqueue_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_margin="6dp"
+                    android:scrollbars="vertical"
+                    android:text="结果" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/retrofit_and_rxjava_execute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:text="retrofit2 + RxJava2异步请求" />
+                <Button
+                    android:id="@+id/retrofit_execute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="retrofit同步请求" />
 
-        <TextView
-            android:id="@+id/retrofit_and_rxjava_execute_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:scrollbars="vertical"
-            android:text="结果" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/retrofit_execute_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="结果" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/retrofit_and_rxjava_execute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="retrofit2 + RxJava2异步请求" />
+
+                <TextView
+                    android:id="@+id/retrofit_and_rxjava_execute_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:scrollbars="vertical"
+                    android:text="结果" />
+            </LinearLayout>
+
+            <TextView
+                android:text="post请求："
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/okhttp_enqueue_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="okhttp异步post请求" />
+
+                <TextView
+                    android:id="@+id/okhttp_enqueue_post_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:scrollbars="vertical"
+                    android:text="结果" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
