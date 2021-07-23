@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.zz.example.R;
 import com.example.zz.example.network.bean.JsonBean;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
@@ -311,12 +312,11 @@ public class NetWorkActivity extends AppCompatActivity {
                 try {
                     String string = body.string();
                     //发送到主线程更新text
-//                        mOkHttpEnqueueResultPost.setText("收到的结果是：" +
-//                                "\nresponse.code() = " + code +
-//                                "\nresponse.body().string() = " + string);
-                    Log.e("eeeeee", "收到的结果是：" +
-                            "\nresponse.code() = " + code +
-                            "\nresponse.body().string() = " + string);
+                    mHandler.post(() -> {
+                        mOkHttpEnqueueResultPost.setText("收到的结果是：" +
+                                "\nresponse.code() = " + code +
+                                "\nresponse.body().string() = " + string);
+                    });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -446,7 +446,8 @@ public class NetWorkActivity extends AppCompatActivity {
 
     private void bean2OrgJson() {
         JsonBean jsonBean = new JsonBean("张三", 18);
-
+        String s = new Gson().toJson(jsonBean);
+        Log.e("NetWorkActivity", "bean2OrgJson  s = " + s);
 
     }
 
