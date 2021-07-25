@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.example.zz.example.R;
 import com.example.zz.example.network.bean.JsonBean;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,7 +20,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -133,14 +134,14 @@ public class NetWorkActivity extends AppCompatActivity {
 
 
                     String s = "";
-                    for (int i = 0; i < nameList.size(); i++) {
-                        s = s + nameList.get(i) + "  ";
+                    for (int i = 0; i < stuList.size(); i++) {
+                        s = s + stuList.get(i) + "  ";
                     }
 
                     String finalS = s;
                     mHandler.post(() -> {
                         //通过handler发送到主线程更新ui
-
+                        //注意：response.body().string();      string不能调用两次 被调用一次就关闭了，这里调用两次会报异常
                         mOkHttpEnqueueResult.setText("收到的结果是：" +
                                 "\nresponse.code() = " + code +
                                 "\nresponse.body() = " + body +
@@ -153,7 +154,7 @@ public class NetWorkActivity extends AppCompatActivity {
         });
         mOkHttpExecute.setOnClickListener(v -> {
 
-            //OkHttp同步请求--对应execute方法,运行在主线程
+            //OkHttp同步请求--对应execute方法,运行在主线程会报错
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             OkHttpClient okHttpClient = builder.build();
             Request.Builder builder1 = new Request.Builder();
@@ -161,7 +162,7 @@ public class NetWorkActivity extends AppCompatActivity {
             Request request = builder1.build();
 
             try {
-                //由于是在主线程执行网络请求，会报错
+                //同步请求会阻塞UI线程，由于是在主线程执行网络请求，会报错，所以需要在子线程运行
                 Response response = okHttpClient.newCall(request).execute();
                 mOkHttpExecuteResult.setText(response.message());
             } catch (IOException e) {
@@ -178,8 +179,8 @@ public class NetWorkActivity extends AppCompatActivity {
                     .build();
 
             NewsService mService = retrofit.create(NewsService.class);
-            //此处我们添加的返回数据类型是ResponseBody，因为不知道服务其中的数据类型是怎样定义的
-            //如果此处像zztakeout的知道数据类型，可以按照服务器的数据类型新建实例对象，如ResponseInfo这样的进行获取，获取之后可以直接转化成集合
+            //此处我们添加的返回数据类型是ResponseBody，因为不知道服务其中的数据类型是怎样定义的，所以这样获取的和okhttp获取的是一样，需要自己json转对象或者集合
+            //如果此处像zztakeout的知道数据类型，可以按照服务器的数据类型新建实例对象，如ResponseInfo这样的进行获取，获取之后可以直接转化成集合或者对象
             retrofit2.Call<ResponseBody> call = mService.getJokeList(1, 3, "text");
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -216,7 +217,7 @@ public class NetWorkActivity extends AppCompatActivity {
             NewsService mService = retrofit.create(NewsService.class);
             retrofit2.Call<ResponseBody> call = mService.getJokeList(1, 3, "text");
             try {
-                //由于是在主线程执行网络请求，会报错
+                //同步请求会阻塞UI线程，由于是在主线程执行网络请求，会报错，使用时必须在子线程
                 retrofit2.Response<ResponseBody> execute = call.execute();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -324,9 +325,7 @@ public class NetWorkActivity extends AppCompatActivity {
         });
     }
 
-    ArrayList<String> idList = new ArrayList<>(20);
-    ArrayList<String> nameList = new ArrayList<>(20);
-
+    ArrayList<JsonBean> stuList = new ArrayList<>(20);
 
     int code;
     ResponseBody body;
@@ -339,6 +338,10 @@ public class NetWorkActivity extends AppCompatActivity {
         message = response.message();
         string = response.body().string();
         String responseData = string;
+        //网络请求的返回结果response的body()数据，理论上可以是各种各样的数据，有可能是xml数据，也有可能是json数据；由于json数据好用，所以绝大多少大家约定都用json
+        //如上面的response.body().string();返回的就是一个json字符串；json字符串的特点就是，字符串都是key：value的形式，value可以是array、int、String等类型
+        //也可能是各种类型组合起来的，解析时，参考下面 orgJson2Bean() 这个方法进行解析
+
         try {
             JSONArray jsonArray = null;
             try {
@@ -349,6 +352,10 @@ public class NetWorkActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(responseData);
                 jsonArray = jsonObject.getJSONArray("result");
 
+
+                int code = jsonObject.getInt("code");
+                String message = jsonObject.optString("message");
+                Log.e("eeeeee", "message = " + message + " code " + code);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -356,8 +363,10 @@ public class NetWorkActivity extends AppCompatActivity {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String id = jsonObject.getString("sid");
                 String name = jsonObject.getString("text");
-                idList.add(id);
-                nameList.add(name);
+                JsonBean jsonBean = new JsonBean();
+                jsonBean.setName(name);
+                jsonBean.setNum(id);
+                stuList.add(jsonBean);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -368,10 +377,10 @@ public class NetWorkActivity extends AppCompatActivity {
      * json字符串转化有自带的org.Json、谷歌出品的Gson、FastJson、Jackson、Json-Lib等方式
      * 这里只对org.Json和Gson的使用做说明
      */
-
+    //直接使用JSON相关的类进行构造json字符串
     private void easyJsonString() {
         try {
-            //JSONObject构造1
+            //JSONObject构造1，使用key：value赋值形式
             JSONObject obj = new JSONObject();
             System.out.println(obj.toString());//输出空对象: {}
             obj.put("key1", 1);
@@ -379,16 +388,35 @@ public class NetWorkActivity extends AppCompatActivity {
             System.out.println(obj.toString());//输出: {"key2":2,"key1":1}
 
             //JSONObject构造2，参数传入json格式的字符串
-            JSONObject obj2 = new JSONObject(obj.toString());
+            String j = "{\"1000\":2,\"100\":111}";
+            JSONObject obj2 = new JSONObject(j);
             System.out.println(obj2.toString());
 
-            //构造1进行嵌套
+            //嵌套复杂Json字符串
             JSONObject obj3 = new JSONObject();
             System.out.println(obj3.toString());//输出空对象: {}
             obj3.put("key3", 3);
             obj3.put("key4", obj);
             System.out.println(obj3.toString());//输出: {"key3":3,"key4":{"key1":1,"key2":2}}
 
+            //JSONArray 是用来存储JSONObject的数组
+            //JSONArray构造1
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(obj);
+            jsonArray.put(obj2);
+            System.out.println(jsonArray.toString()); //输出: [{"key1":1,"key2":2},{"key1":1,"key2":2}]
+
+            //JSONArray构造2，传入json数组格式的字符串
+            String jsonArrStr = "[{\"1000\":2,\"100\":111},{\"1000\":2,\"100\":222}]";
+            JSONArray array = new JSONArray(jsonArrStr);
+            System.out.println(array.toString());//输出: [{"1000":2,"100":111},{"1000":2,"100":222}]
+
+
+            //JSONArray遍历
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObj = array.getJSONObject(i);
+                System.out.println(jsonObj.toString());
+            }
 
             //JSONObject属性遍历
             Iterator<String> it = obj2.keys();
@@ -403,35 +431,36 @@ public class NetWorkActivity extends AppCompatActivity {
                 System.out.println(obj.get(key));
             }
 
-
-            //JSONArray 是用来存储JSONObject的数组
-            //JSONArray构造1
-            JSONArray jsonArray = new JSONArray();
-            jsonArray.put(obj);
-            jsonArray.put(obj2);
-            System.out.println(jsonArray.toString());
-
-            //JSONArray构造2，传入json数组格式的字符串
-            String jsonArrStr = "[{\"1000\":2,\"100\":111},{\"1000\":2,\"100\":222}]";
-            JSONArray array = new JSONArray(jsonArrStr);
-            System.out.println(array.toString());
-
-            //JSONArray遍历
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObj = array.getJSONObject(i);
-                System.out.println(jsonObj.toString());
-            }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    //通过对象、集合转为json
+    private void bean2OrgJson() {
+        //对象转json
+        JsonBean jsonBean = new JsonBean("张三", 18);
+        String s = new Gson().toJson(jsonBean);
+        Log.e("NetWorkActivity", "bean2OrgJson  s = " + s);
+
+        //集合转json
+        List list = new ArrayList();
+        list.add(new JsonBean("zhangSan", 13));
+        list.add(new JsonBean("liSi", 14));//创建json集合
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(list);
+        System.out.println(jsonString);
+
+    }
+
+    //json转为对象、集合
     private void orgJson2Bean() {
-        //直接粘贴的json字符串
+        //jsonstr是直接粘贴的json字符串，注意引号是不一样的
         String jsonstr = "{“id”:“66”,“name”:“helloword”,“age”:“18”}";
         //手动输入的json字符串，输入不了上面的引号的，需要加转义字符
         String orgJson = "{\"name\":\"张三\",\"age\":\"18\"}";
+
+        //1、json转对象，要求最外面是大括号
         try {
             JSONObject jsonObject = new JSONObject(orgJson);
             JsonBean jsonBean = new JsonBean();
@@ -442,13 +471,50 @@ public class NetWorkActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
 
-    private void bean2OrgJson() {
-        JsonBean jsonBean = new JsonBean("张三", 18);
-        String s = new Gson().toJson(jsonBean);
-        Log.e("NetWorkActivity", "bean2OrgJson  s = " + s);
+        //2、json转数组(集合)，要求json数据是 [{id=001,name=张三},{id=002,name=李四}] 这种类型，中括号包裹里面大括号数组
+        String jsonArrayString = "[{\"语文\":77},{\"数学\":99}]";
+        try {
+            JSONArray jsonArray = new JSONArray(jsonArrayString);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String id = jsonObject.getString("sid");
+                String name = jsonObject.getString("text");
+                JsonBean jsonBean = new JsonBean();
+                jsonBean.setName(name);
+                jsonBean.setNum(id);
+                stuList.add(jsonBean);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        //3、复杂情况，分步解析，从外到内进行解析，外面是大括号就解析对象，外面是中括号就解析数组
+        String json = "{\"name\":\"张三\",\"age\":\"18\",\"result\":\"[{\"语文\":\"77\"},{\"数学\":\"99\"}]\"}";
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JsonBean jsonBean = new JsonBean();
+            jsonBean.setName(jsonObject.getString("name"));//getString没有值时会抛异常
+            jsonBean.setAge(jsonObject.optInt("age"));//optxxx这种方式没有值时，返回空
+            JSONArray result = jsonObject.getJSONArray("result");
+            HashMap<String, String> s = new HashMap<>();
+            for (int i = 0; i < result.length(); i++) {
+                JSONObject o = result.getJSONObject(i);//注意是getJSONObject，而不是get！！！
+                String y = o.getString("chinese");
+                String sx = o.getString("math");
+                s.put("chinese", y);
+                s.put("math", sx);
+            }
+            jsonBean.setResult(s);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        //4、使用框架gson进行转化
+        String j = "{\"name\":\"张三\",\"age\":\"18\"}";
+        Gson gson = new Gson();
+        JsonBean jsonBean = gson.fromJson(j, JsonBean.class);
     }
 
 }
