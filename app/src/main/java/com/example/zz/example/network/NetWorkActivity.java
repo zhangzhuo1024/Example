@@ -110,6 +110,8 @@ public class NetWorkActivity extends AppCompatActivity {
 
             //OkHttp异步请求--对应enqueue方法
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
+//            builder.connectTimeout(10, TimeUnit.SECONDS);
+//            builder.addInterceptor(incepter);
             OkHttpClient okHttpClient = builder.build();
             Request.Builder builder1 = new Request.Builder();
             builder1.url(mUrlApi + "getJoke?page=1&count=2&type=text");
@@ -175,6 +177,7 @@ public class NetWorkActivity extends AppCompatActivity {
             //Retrofit异步请求--对应enqueue方法
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(mUrlApi)
+//                    .client(httpClient)  //添加httpClient，通过httpClient可以设置超时、拦截器
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
