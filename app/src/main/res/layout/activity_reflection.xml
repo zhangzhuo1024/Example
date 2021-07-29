@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".reflection.ReflectionActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/methodone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="methodOne"
+            android:text="反射获取类，方法一" />
+
+        <Button
+            android:id="@+id/methodtwo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="methodTwo"
+            android:text="反射获取类，方法二" />
+
+        <Button
+            android:id="@+id/methodthree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="methodThree"
+            android:text="反射获取类，方法三" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
