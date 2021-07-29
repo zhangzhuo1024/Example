@@ -178,7 +178,7 @@ public class NetWorkActivity extends AppCompatActivity {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(mUrlApi)
 //                    .client(httpClient)  //添加httpClient，通过httpClient可以设置超时、拦截器
-                    .addConverterFactory(GsonConverterFactory.create())
+//                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
             NewsService mService = retrofit.create(NewsService.class);
