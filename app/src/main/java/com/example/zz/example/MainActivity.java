@@ -67,32 +67,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.network).setOnClickListener(this);
         findViewById(R.id.rxjava).setOnClickListener(this);
         findViewById(R.id.reflection).setOnClickListener(this);
-        if (Build.VERSION.SDK_INT >= 23) {//6.0才用动态权限
-            initPermission();
-        }
+        initPermission();
     }
 
-    List<String> mPermissionList = new ArrayList<>();
 
     private void initPermission() {
-
-        mPermissionList.clear();//清空没有通过的权限
-
-        String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET};
-        //逐个判断你要的权限是否已经通过
-        for (int i = 0; i < permissions.length; i++) {
-            if (ContextCompat.checkSelfPermission(this, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
-                mPermissionList.add(permissions[i]);//添加还未授予的权限
+        if (Build.VERSION.SDK_INT >= 23) {
+            List<String> mPermissionList = new ArrayList<>();
+            String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.INTERNET};
+            //逐个判断你要的权限是否已经通过
+            for (int i = 0; i < permissions.length; i++) {
+                if (ContextCompat.checkSelfPermission(this, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
+                    mPermissionList.add(permissions[i]);//添加还未授予的权限
+                }
             }
-        }
-
-        //申请权限
-        if (mPermissionList.size() > 0) {
-            //有权限没有通过，需要申请
-            ActivityCompat.requestPermissions(this, permissions, 500);
-        } else {
-            //说明权限都已经通过，可以做你想做的事情去
+            //申请权限
+            if (mPermissionList.size() > 0) {
+                //有权限没有通过，需要申请
+                ActivityCompat.requestPermissions(this, permissions, 500);
+            } else {
+                //说明权限都已经通过，可以做你想做的事情去
+            }
         }
     }
 

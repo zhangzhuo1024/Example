@@ -17,17 +17,42 @@ import java.util.TreeSet;
 public class DemoTest {
     public static void main(String[] args) {
 
+        testIntMove(2);
+
         明明随机数();
         String s = "";
         s.substring(1);
-//        Integer.valueOf();
-        Log.e("qq","ss");
-
-
         int[] ints = {1, -2, 3, 10, -4, 7, 2, -5};
         FindGreatestSumOfSubArray(ints);
 
     }
+
+    private static void testIntMove(int seq) {
+        byte[] data2 = new byte[2];
+        data2[0] = 1;
+        data2[1] = 1;
+        byte[] data3 = new byte[2];
+        data3[0] = 1;
+        data3[1] = 1;
+
+        System.out.println(data2 == data3);
+        System.out.println(data2.equals(data3));
+
+
+        byte[] data = new byte[6];
+        int offset = 0;
+        data[offset++] = '$';
+        data[offset++] = 0x11;
+        data[offset++] = (byte) seq;
+        data[offset++] = (byte) (seq >> 8);
+        data[offset++] = (byte) (seq >> 16);
+        data[offset++] = (byte) (seq >> 24);
+
+        for (byte datum : data) {
+            System.out.println(datum);
+        }
+    }
+
 
     private static void 明明随机数() {
         Scanner scanner = new Scanner(System.in);

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -32,11 +33,13 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
 import okhttp3.FormBody;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -174,10 +177,36 @@ public class NetWorkActivity extends AppCompatActivity {
 
 
         mRetrofitEnqueue.setOnClickListener(v -> {
+
+            HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
+            logInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+
+
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            builder.connectTimeout(60, TimeUnit.SECONDS)
+                    .addInterceptor(logInterceptor)
+//                    .addInterceptor(new Interceptor() {
+//                        @Override
+//                        public Response intercept(Chain chain) throws IOException {
+//                            Request original = chain.request();
+//
+//                            Request request = original.newBuilder()
+////                                    .header("User-Agent", "Your-App-Name")
+////                                    .header("Accept", "application/vnd.yourapi.v1.full+json")
+//                                    .method(original.method(), original.body())
+//                                    .build();
+//
+//                            return chain.proceed(request);
+//
+//                        }
+//                    })
+                    ;
+            OkHttpClient httpClient = builder.build();
+
             //Retrofit异步请求--对应enqueue方法
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(mUrlApi)
-//                    .client(httpClient)  //添加httpClient，通过httpClient可以设置超时、拦截器
+                    .client(httpClient)  //添加httpClient，通过httpClient可以设置超时、拦截器
 //                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
