@@ -1,3 +1,65 @@
+
+XQ:
+大麦、斑马：
+hashmap和concurrnethashmap有什么区别？（hashtable）
+hashmap：
+安全性：线程不安全
+组成：底层使用数组+链表，可以使用null键和null值
+速度：慢
+扩容：初始size为16，每次扩容newsize = oldsize*2, size一定是2的N次幂；当Map中的元素总数超过Entry数组的75%，触发扩容，扩容针对整个Map,原来的数组中的元素一次重新计算存放位置，重新插入；插入元素后才开始判断是否扩容，有可能无效扩容（插入一些元素后判断超过75%了，马上扩容，如果元素继续插入，存储都不满80%，这种扩容就是无效扩容）
+
+hashtable:
+安全性：线程安全，实现线程安全的方式是在修改数据时synchronized锁住整个HashTable
+组成：组成底层数组+链表，key和value都不能为空，线程安全
+速度：慢
+扩容：初始size为11，扩容newsize = oldsize*+1
+
+concurrenthashmap:
+安全性：线程安全，锁分离技术，把整个Map分为N个Segment，允许多个修改操作在各个段内并发进行，效率提升N倍，默认提升16倍。(读操作不加锁，由于HashEntry的value变量是 volatile的，也能保证读取到最新的值。)
+组成：分段数组+链表
+速度：快
+扩容：段内扩容（段内元素超过该段对应Entry数组长度的75%触发扩容，不会对整个Map进行扩容），插入前检测需不需要扩容，有效避免无效扩容
+
+==和equals有什么区别？常用的数据结构有哪些类型？说一下它们的优缺点。
+arraylist的扩容机制？
+锁有几种类型？
+如何反转一个链表？
+常用哪些设计模式？
+工厂模式有哪几种？
+如何做到让几个线程顺序执行？多说几种方法。
+stringbuilder和stringbuffer的区别？
+volatile的作用，你一般什么情况下使用它？
+常用list有哪些？list和set的区别？
+view事件分发，dispatchtouchevent方法中onIntercepettouchevent返回不拦截后哪个方法决定后续事件分发下去？
+anr有几种类型？
+旋转屏幕会发生什么？如何不重走生命周期？
+导致oom的原因是什么？有哪些情况举例一下。
+一般使用什么工具检测oom？
+进程间通信有几种方式？
+service有几种类型？有几种启动方式？
+retrofit2的原理？用到了哪些设计模式？
+插件化的原理？
+
+
+金山：
+system.load和system.loadLibiary的底层做了什么，为什么前者不能引用变量
+可以说只要接触过 JNI 开发的就一定要掌握这个知识点。JDK 提供给了我们两个方法用于载入库文件，一个是 System.load(String filename) 方法，另一个是 System.loadLibrary(String libname) 方法，它们的区别主要如下分析。
+加载的路径不同：System.load(String filename) 是从作为动态库的本地文件系统中以指定的文件名加载代码文件，文件名参数必须是完整的路径名且带文件后缀；而 System.loadLibrary(String libname) 是加载由 libname 参数指定的系统库（系统库指的是 java.library.path，可以通过 System.getProperty(String key) 方法查看 java.library.path 指向的目录内容），将库名映射到实际系统库的方法取决于系统实现，譬如在 Android 平台系统会自动去系统目录、应用 lib 目录下去找 libname 参数拼接了 lib 前缀的库文件。
+是否自动加载库的依赖库：譬如 libA.so 和 libB.so 有依赖关系，如果选择 System.load("/sdcard/path/libA.so")，即使 libB.so 也放在 /sdcard/path/ 路径下，load 方法还是会因为找不到依赖的 libB.so 文件而失败，因为虚拟机在载入 libA.so 的时候发现它依赖于 libB.so，那么会先去 java.library.path 下载入 libB.so，而 libB.so 并不位于 java.library.path 下，所以会报错。
+解决的方案就是先 System.load("/sdcard/path/libB.so") 再 System.load("/sdcard/path/libA.so")，但是这种方式不太靠谱，因为必须明确知道依赖关系；另一种解决方案就是使用 System.loadLibrary("A")，然后把 libA.so 和 libB.so 都放在 java.library.path 下即可。
+
+hook技术是如何实现的？
+IPC机制听过，那RPC你知道是什么吗？
+serializable底层做了什么？
+gradle的作用，平时会怎么去使用
+分别作用到变量和方法，类上都有些什么不同
+有没有反编译过apk，apk打包都做了些什么？
+
+进程间通信都有哪些方法
+然后安卓调用h5里面如果有非常多的js方法，我们分了非常多的项目组，给一个方案，如果去注册这些js方法
+有序广播和无序广播的区别，说一下你使用有序广播的业务场景
+安卓中如果我想打包时动态去替换res下asset的一个abc.zip文件，有什么思路？
+
 拉钩：
 武汉光瑾丰 150-500人 10k-15k
 1、根据项目计划，负责手机模块的开发、调试以及功能、性能优化。
