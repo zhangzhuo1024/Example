@@ -6,6 +6,9 @@ import android.util.Log;
 
 import com.example.zz.example.datastructures.TreeNodeDemo;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -17,6 +20,8 @@ import java.util.TreeSet;
 public class DemoTest {
     public static void main(String[] args) {
 
+        getAllIp();
+
         testIntMove(2);
 
         明明随机数();
@@ -24,6 +29,39 @@ public class DemoTest {
         s.substring(1);
         int[] ints = {1, -2, 3, 10, -4, 7, 2, -5};
         FindGreatestSumOfSubArray(ints);
+
+    }
+
+    private static void getAllIp() {
+        // dos命令
+
+        String cmd = "arp -a";
+
+        try {
+
+            Process process = Runtime.getRuntime().exec(cmd);
+
+            InputStream is = process.getInputStream();
+
+            InputStreamReader isr = new InputStreamReader(is);
+
+            BufferedReader br = new BufferedReader(isr);
+
+            String content = br.readLine();
+
+            while (content != null) {
+
+                System.out.println(content);
+
+                content = br.readLine();
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
 
     }
 
