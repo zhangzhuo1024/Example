@@ -29,6 +29,7 @@ import com.example.zz.example.pattern.PatternActivity;
 import com.example.zz.example.pattern.rxjava.RxjavaActivity;
 import com.example.zz.example.pictureload.PictureLoadActivity;
 import com.example.zz.example.reflection.ReflectionActivity;
+import com.example.zz.example.timer.TimerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.rxjava).setOnClickListener(this);
         findViewById(R.id.reflection).setOnClickListener(this);
         findViewById(R.id.annotation).setOnClickListener(this);
+        findViewById(R.id.timer).setOnClickListener(this);
         initPermission();
     }
 
@@ -166,6 +168,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.annotation:
                 ActivityUtils.getInstance().goToActivity(MainActivity.this, AnnotationActivity.class);
+                break;
+            case R.id.timer:
+                ActivityUtils.getInstance().goToActivity(MainActivity.this, TimerActivity.class);
                 break;
             default:
                 return;

@@ -125,6 +125,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="注解"/>
+
+            <Button
+                android:id="@+id/timer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="计数器"/>
         </LinearLayout>
     </ScrollView>
 
