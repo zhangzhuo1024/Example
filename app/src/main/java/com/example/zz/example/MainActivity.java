@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.zz.example.annotation.AnnotationActivity;
 import com.example.zz.example.broadcast.BroadcastActivity;
 import com.example.zz.example.clickevent.ClickEventActivity;
 import com.example.zz.example.clickspanner.WeiboContentTestActivity;
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.network).setOnClickListener(this);
         findViewById(R.id.rxjava).setOnClickListener(this);
         findViewById(R.id.reflection).setOnClickListener(this);
+        findViewById(R.id.annotation).setOnClickListener(this);
         initPermission();
     }
 
@@ -161,6 +163,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.reflection:
                 ActivityUtils.getInstance().goToActivity(MainActivity.this, ReflectionActivity.class);
+                break;
+            case R.id.annotation:
+                ActivityUtils.getInstance().goToActivity(MainActivity.this, AnnotationActivity.class);
                 break;
             default:
                 return;

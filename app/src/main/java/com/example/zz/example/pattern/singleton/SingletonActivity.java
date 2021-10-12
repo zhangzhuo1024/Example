@@ -28,7 +28,7 @@ public class SingletonActivity extends Activity {
         });
 
         findViewById(R.id.lock_lazy).setOnClickListener(v -> {
-            LockLazySingle.getsInstance().doSomething();
+            LockLazySingle.getsInstance(this).doSomething();
         });
 
         findViewById(R.id.static_singleton).setOnClickListener(v -> {

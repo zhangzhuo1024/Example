@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".reflection.ReflectionActivity"></activity>
+        <activity android:name=".annotation.AnnotationActivity" />
+        <activity android:name=".reflection.ReflectionActivity" />
         <activity android:name=".memory.MemoryActivity" />
         <activity android:name=".network.NewsHtmlActivity" />
         <activity android:name=".pattern.rxjava.RxjavaActivity" />

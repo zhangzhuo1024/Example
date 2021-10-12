@@ -11,7 +11,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/ZzButterKnife" />
+            <option value="$PROJECT_DIR$/ZzButterKnifeAnnotation" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/appbarlayout" />
             <option value="$PROJECT_DIR$/customcontrollib" />
             <option value="$PROJECT_DIR$/javaKotlinlib" />
             <option value="$PROJECT_DIR$/kotlin" />
@@ -27,7 +30,6 @@
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
-        <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>
   </component>

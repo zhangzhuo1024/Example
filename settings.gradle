@@ -8,3 +8,6 @@ include ':module_app'
 include ':javaKotlinlib'
 include ':app', ':kotlin', ':zzplayer', ':opscreenrecorder', ':remoteservice'
 include ':customcontrollib'
+
+include ':ZzButterKnifeAnnotation'
+include ':ZzButterKnife'
