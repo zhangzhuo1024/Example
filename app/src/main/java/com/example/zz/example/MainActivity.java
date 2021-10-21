@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.zz.example.annotation.AnnotationActivity;
+import com.example.zz.example.java.annotation.AnnotationActivity;
 import com.example.zz.example.broadcast.BroadcastActivity;
 import com.example.zz.example.clickevent.ClickEventActivity;
 import com.example.zz.example.clickspanner.WeiboContentTestActivity;

@@ -83,10 +83,10 @@ public class AnnotationCompiler extends AbstractProcessor {
                     String name = IBinder.class.getPackage().getName();
                     writer.write("import " + name + ".IBinder;\n");
                     // public class AnnotationActivity_ZzBindView implements IBinder<
-                    // com.example.zz.example.annotation.AnnotationActivity> {
+                    // com.example.zz.example.java.annotation.AnnotationActivity> {
                     writer.write("public class " + activityName + "_ZzBindView implements IBinder<" +
                             packageName + "." + activityName + ">{\n");
-                    // public void bind(com.example.zz.example.annotation.AnnotationActivity target) {
+                    // public void bind(com.example.zz.example.java.annotation.AnnotationActivity target) {
                     writer.write(" @Override\n" +
                             " public void bind(" + packageName + "." + activityName + " target){");
                     //target.annotationText = (android.widget.TextView) target.findViewById(2131165223);

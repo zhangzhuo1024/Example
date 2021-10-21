@@ -1,4 +1,4 @@
-package com.example.zz.example.annotation;
+package com.example.zz.example.java.annotation;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

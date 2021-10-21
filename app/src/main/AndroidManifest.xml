@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".timer.TimerActivity"></activity>
-        <activity android:name=".annotation.AnnotationActivity" />
+        <activity android:name=".java.annotation.AnnotationActivity" />
         <activity android:name=".reflection.ReflectionActivity" />
         <activity android:name=".memory.MemoryActivity" />
         <activity android:name=".network.NewsHtmlActivity" />
